@@ -1,47 +1,703 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Documentação - Minha Biblioteca</title>
+<title>Guia de Configuração LTI 1.3 — Minha Biblioteca</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-* { margin: 0; padding: 0; box-sizing: border-box; }
-body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; display: flex; align-items: center; justify-content: center; }
-.card { background: white; border-radius: 24px; padding: 60px; max-width: 600px; width: 90%; box-shadow: 0 25px 50px rgba(0,0,0,0.15); text-align: center; }
-.logo { font-size: 48px; margin-bottom: 20px; }
-h1 { font-size: 28px; color: #1a1a2e; margin-bottom: 12px; font-weight: 700; }
-.subtitle { color: #667eea; font-size: 16px; font-weight: 500; margin-bottom: 30px; }
-p { color: #555; line-height: 1.8; font-size: 15px; margin-bottom: 20px; }
-.badge { display: inline-block; background: #f0f4ff; color: #667eea; padding: 8px 16px; border-radius: 20px; font-size: 13px; font-weight: 500; margin: 5px; }
-.status { margin-top: 30px; padding-top: 20px; border-top: 1px solid #eee; }
-.status-dot { display: inline-block; width: 10px; height: 10px; background: #10b981; border-radius: 50%; margin-right: 8px; animation: pulse 2s infinite; }
-@keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.5; } }
-.footer { margin-top: 30px; font-size: 12px; color: #999; }
-.deploy-info { margin-top: 20px; background: #f8f9ff; padding: 15px; border-radius: 12px; font-size: 13px; color: #667eea; }
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --navy:#0A2342;--navy-mid:#16355B;
+  --blue:#007DB7;--blue-light:#3FABFD;--blue-bg:rgba(0,125,183,.06);--blue-border:rgba(0,125,183,.15);
+  --green:#AECA0C;--green-bg:rgba(174,202,12,.1);--green-border:rgba(174,202,12,.3);
+  --white:#fff;--light:#F3F5F9;--gray:#E5E8ED;
+  --text:#1E2325;--text-mid:#4A5568;--text-light:#6B7780;
+  --warn:#E6930A;--warn-bg:#FEF8EC;--warn-border:#FCECC5;
+  --success:#16A34A;--success-bg:#EEFBF3;--success-border:#C6F0D4;
+  --danger:#DC2626;
+  --radius:12px;--radius-lg:24px;
+  --font:'Montserrat',sans-serif;
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--font);background:var(--light);color:var(--text);line-height:1.75;-webkit-font-smoothing:antialiased}
+
+.page{max-width:1200px;margin:0 auto;padding:0 40px 120px}
+
+/* Hero */
+.hero{background:var(--navy);color:#fff;text-align:center;padding:56px 24px 48px;margin:0 -24px 0;position:relative;overflow:hidden}
+.hero::after{content:'';position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:80px;height:3px;background:var(--green);border-radius:3px}
+.hero-logo{height:36px;margin-bottom:24px}
+.hero-badge{display:inline-block;background:rgba(174,202,12,.15);color:var(--green);font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:6px 16px;border-radius:30px;margin-bottom:20px}
+.hero h1{font-size:2.2rem;font-weight:800;letter-spacing:-.03em;margin-bottom:12px;line-height:1.2}
+.hero h1 span{color:var(--green)}
+.hero p{font-size:1rem;color:rgba(255,255,255,.7);max-width:520px;margin:0 auto}
+
+/* Platform tabs */
+.plat-nav{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;padding:24px 0 32px;position:sticky;top:0;z-index:100;background:var(--light)}
+.plat-btn{display:flex;align-items:center;gap:8px;padding:10px 20px;border-radius:40px;border:1.5px solid var(--gray);background:var(--white);color:var(--text-light);font-family:var(--font);font-size:13px;font-weight:600;cursor:pointer;transition:all .2s;box-shadow:0 2px 8px rgba(10,35,66,.04);text-decoration:none}
+.plat-btn:hover{border-color:var(--blue);color:var(--blue);transform:translateY(-1px)}
+.plat-btn.active{background:var(--blue);color:#fff;border-color:var(--blue);box-shadow:0 4px 16px rgba(0,125,183,.25)}
+.plat-btn .dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+
+.platform-section{display:block;scroll-margin-top:80px}
+
+/* Cards */
+.card{background:var(--white);border:1px solid var(--gray);border-radius:var(--radius);padding:28px 32px;margin-bottom:20px;box-shadow:0 2px 8px rgba(10,35,66,.04)}
+.card h2{font-size:1.25rem;font-weight:700;margin-bottom:12px;color:var(--navy)}
+.card h3{font-size:1rem;font-weight:700;margin:24px 0 10px;color:var(--navy)}
+.card p{color:var(--text);margin-bottom:12px}
+
+/* Step */
+.step-header{display:flex;align-items:center;gap:14px;margin-bottom:20px}
+.step-num{width:36px;height:36px;border-radius:50%;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.9rem;flex-shrink:0}
+.step-header h2{margin:0;font-size:1.15rem}
+
+/* Steps list */
+.steps{counter-reset:step;list-style:none;margin:12px 0 16px;padding:0}
+.steps li{counter-increment:step;display:flex;gap:14px;align-items:flex-start;padding:10px 14px;border-radius:8px;margin-bottom:3px;font-size:14px;transition:background .15s}
+.steps li:hover{background:var(--light)}
+.steps li::before{content:counter(step);width:26px;height:26px;border-radius:50%;background:var(--blue-bg);color:var(--blue);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;flex-shrink:0;margin-top:1px}
+
+/* Alert */
+.alert{border-radius:var(--radius);padding:16px 20px;margin:16px 0;display:flex;gap:12px;align-items:flex-start;font-size:14px;line-height:1.6}
+.alert .icon{font-size:1.1rem;flex-shrink:0;margin-top:2px}
+.alert-warn{background:var(--warn-bg);border:1px solid var(--warn-border)}
+.alert-warn strong{color:var(--warn)}
+.alert-success{background:var(--success-bg);border:1px solid var(--success-border)}
+.alert-success strong{color:var(--success)}
+.alert-info{background:var(--blue-bg);border:1px solid var(--blue-border)}
+.alert-info strong{color:var(--blue)}
+
+/* Tables */
+table{width:100%;border-collapse:separate;border-spacing:0;margin:12px 0 20px;border-radius:var(--radius);overflow:hidden;border:1px solid var(--gray);font-size:14px}
+thead{background:var(--navy)}
+th{padding:11px 16px;text-align:left;font-weight:700;color:#fff;font-size:11px;letter-spacing:.05em;text-transform:uppercase;border-bottom:1px solid var(--gray)}
+td{padding:10px 16px;border-bottom:1px solid var(--light);color:var(--text)}
+tr:last-child td{border-bottom:none}
+tbody tr:hover{background:var(--light)}
+td code{font-size:12px;background:var(--blue-bg);padding:2px 6px;border-radius:5px;color:var(--blue);font-family:monospace}
+.table-env{table-layout:fixed}
+.table-env td:first-child{width:160px;vertical-align:top;padding-top:12px}
+.table-env td{word-break:break-all}
+.table-env td code{font-size:11px}
+
+ul{margin:8px 0 16px 20px}
+li{margin-bottom:6px;font-size:14px}
+li::marker{color:var(--blue)}
+
+/* Data box */
+.data-box{background:var(--blue-bg);border:1px solid var(--blue-border);border-radius:var(--radius);padding:20px 24px;margin:16px 0}
+.data-box h3{color:var(--blue);font-size:14px;font-weight:700;margin:0 0 10px;display:flex;align-items:center;gap:8px}
+.data-box ul{margin:0;list-style:none;padding:0}
+.data-box li{display:flex;align-items:center;gap:8px;padding:4px 0;font-size:14px}
+.data-box li::before{content:"→";color:var(--blue);font-weight:700}
+
+/* Support */
+.support-card{background:var(--navy);color:#fff;border-radius:var(--radius-lg);padding:40px;margin-top:40px;text-align:center}
+.support-card h2{color:#fff;margin-bottom:8px;font-size:1.3rem}
+.support-card p{color:rgba(255,255,255,.75);margin-bottom:0;font-size:14px}
+
+/* Gotcha cards */
+.gotcha{background:#FFFBEB;border:1px solid #FDE68A;border-left:4px solid var(--warn);border-radius:0 var(--radius) var(--radius) 0;padding:20px 24px;margin:16px 0}
+.gotcha h4{font-size:14px;font-weight:700;color:var(--navy);margin-bottom:6px;display:flex;align-items:center;gap:8px}
+.gotcha p{font-size:13px;margin:0 0 6px;color:var(--text-mid);line-height:1.6}
+.gotcha code{font-size:12px;background:rgba(0,125,183,.08);padding:2px 6px;border-radius:4px;color:var(--blue);font-family:monospace}
+.gotcha-grid{display:grid;gap:12px;margin:16px 0 20px}
+
+/* Sim link */
+.sim-link{display:inline-flex;align-items:center;gap:6px;margin-top:8px;padding:7px 16px;border-radius:8px;background:var(--navy);color:#fff;font-size:12px;font-weight:700;text-decoration:none;transition:background .2s,transform .15s}
+.sim-link:hover{background:var(--blue);transform:translateY(-1px)}
+
+/* Screenshot placeholder */
+.screenshot-ph{display:flex;align-items:center;gap:10px;background:var(--light);border:2px dashed var(--gray);border-radius:var(--radius);padding:14px 20px;margin:12px 0;color:var(--text-light);font-size:13px;font-style:italic}
+.screenshot-ph::before{content:'📸';font-size:1.4rem;font-style:normal}
+
+.guide-img{max-width:100%;margin-top:12px;border-radius:8px;border:1px solid var(--gray);display:block}
+.guide-img-xs{max-width:140px}
+.guide-img-sm{max-width:260px}
+.guide-img-md{max-width:650px}
+@media(max-width:640px){.hero h1{font-size:1.7rem}.card{padding:20px}.plat-nav{gap:6px}.plat-btn{padding:8px 14px;font-size:12px}}
+@media print{
+  .plat-nav{display:none}
+  .hero{padding:32px 24px 28px;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .page{padding:0 16px 0}
+  .card{break-inside:avoid;box-shadow:none;border:1px solid #ddd}
+  .alert,.data-box,.gotcha,.concept-box{break-inside:avoid}
+  table{break-inside:avoid}
+  .sim-link,.screenshot-ph{display:none}
+  .support-card{break-before:page;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
 </style>
 </head>
 <body>
-<div class="card">
-  <div class="logo">📚</div>
-  <h1>Documentação Minha Biblioteca</h1>
-  <p class="subtitle">Portal de Documentação Pública</p>
-  <p>Bem-vindo ao portal de documentação da Minha Biblioteca — a maior plataforma de biblioteca digital acadêmica do Brasil.</p>
-  <div>
-    <span class="badge">S3 + CloudFront</span>
-    <span class="badge">GitHub Actions CI/CD</span>
-    <span class="badge">Deploy em 30s</span>
-  </div>
-  <div class="deploy-info">
-    🚀 Deploy automático via GitHub Actions — qualquer push na main reflete aqui em segundos
-  </div>
-  <div class="status">
-    <span class="status-dot"></span>
-    <span style="color:#10b981;font-weight:500">Sistema operacional</span>
-  </div>
-  <div class="footer">
-    Infraestrutura &amp; SRE — Minha Biblioteca © 2026
+
+<div class="page">
+
+<div class="hero">
+  <br>
+  <img src="./imgs/mb-new.png.webp" alt="Minha Biblioteca" class="hero-logo">
+  <div class="hero-badge">Guia de Configuração</div>
+  <h1>Integração <span>LTI 1.3</span></h1>
+  <p>Streaming de livros digitais integrado ao seu LMS. Selecione sua plataforma e siga o passo a passo.</p>
+</div>
+
+<div class="plat-nav">
+  <a class="plat-btn active" href="#sec-intro"><span class="dot" style="background:#6B7780"></span>Início</a>
+  <a class="plat-btn" href="#sec-canvas"><span class="dot" style="background:#e24a3a"></span>Canvas</a>
+  <a class="plat-btn" href="#sec-moodle"><span class="dot" style="background:#f98012"></span>Moodle</a>
+  <a class="plat-btn" href="#sec-blackboard"><span class="dot" style="background:#7c3aed"></span>Blackboard</a>
+  <a class="plat-btn" href="#sec-brightspace"><span class="dot" style="background:#2563eb"></span>Brightspace</a>
+  <a class="plat-btn" href="#sec-alxp"><span class="dot" style="background:#16a34a"></span>A-LXP</a>
+</div>
+
+<!-- INTRO -->
+<div class="platform-section" id="sec-intro">
+  <div class="card">
+    <h2>Antes de começar</h2>
+    <p>A integração LTI 1.3 permite que o <strong>Minha Biblioteca</strong> funcione diretamente dentro do seu LMS, com autenticação automática para professores e alunos. A configuração é feita uma única vez pelo administrador.</p>
+
+    <h3>Endpoints do Minha Biblioteca <span style="display:inline-flex;align-items:center;gap:5px;background:#DC262612;border:1px solid #DC262635;color:#DC2626;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:2px 9px;border-radius:20px;vertical-align:middle;margin-left:6px"><span style="width:6px;height:6px;border-radius:50%;background:#DC2626;flex-shrink:0;display:inline-block"></span>PRD — Produção</span></h3>
+    <p>Use os dados abaixo para configurar a ferramenta no seu LMS. Estes valores são <strong>fixos para todos os clientes</strong> e correspondem ao ambiente de <strong>produção</strong> (<code>fusion.minhabiblioteca.com.br</code>):</p>
+    <table><thead><tr><th>Campo</th><th>Valor</th></tr></thead><tbody>
+      <tr><td><strong>Tool URL / Launch URL</strong></td><td><code>https://fusion.minhabiblioteca.com.br/accounts/api/v1/lti/launch</code></td></tr>
+      <tr><td><strong>Login URL (OIDC Initiation)</strong></td><td><code>https://fusion.minhabiblioteca.com.br/accounts/api/v1/lti/login</code></td></tr>
+      <tr><td><strong>Redirect URI(s)</strong></td><td><code>https://fusion.minhabiblioteca.com.br/accounts/api/v1/lti/launch</code></td></tr>
+      <tr><td><strong>Public Keyset URL (JWKS)</strong></td><td><code>https://fusion.minhabiblioteca.com.br/accounts/api/v1/lti/jwks</code></td></tr>
+    </tbody></table>
+
+    <h3>Endpoints do Minha Biblioteca <span style="display:inline-flex;align-items:center;gap:5px;background:#E6930A12;border:1px solid #E6930A35;color:#E6930A;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:2px 9px;border-radius:20px;vertical-align:middle;margin-left:6px"><span style="width:6px;height:6px;border-radius:50%;background:#E6930A;flex-shrink:0;display:inline-block"></span>HMG — Homologação</span></h3>
+    <p>Use apenas para testes e validação de integração. Domínio: <code>fusion.green.stage.minhabiblioteca.dev</code>:</p>
+    <table><thead><tr><th>Campo</th><th>Valor</th></tr></thead><tbody>
+      <tr><td><strong>Tool URL / Launch URL</strong></td><td><code>https://fusion.green.stage.minhabiblioteca.dev/accounts/api/v1/lti/launch</code></td></tr>
+      <tr><td><strong>Login URL (OIDC Initiation)</strong></td><td><code>https://fusion.green.stage.minhabiblioteca.dev/accounts/api/v1/lti/login</code></td></tr>
+      <tr><td><strong>Redirect URI(s)</strong></td><td><code>https://fusion.green.stage.minhabiblioteca.dev/accounts/api/v1/lti/launch</code></td></tr>
+      <tr><td><strong>Public Keyset URL (JWKS)</strong></td><td><code>https://fusion.green.stage.minhabiblioteca.dev/accounts/api/v1/lti/jwks</code></td></tr>
+    </tbody></table>
+
+    <h3>Custom Parameter (obrigatório)</h3>
+    <p>Além dos endpoints, você receberá da nossa equipe uma <strong>api_key</strong> exclusiva da sua instituição. Essa chave deve ser configurada como Custom Parameter no LMS:</p>
+    <table><thead><tr><th>Parâmetro</th><th>Formato</th></tr></thead><tbody>
+      <tr><td><strong><code>api_key</code></strong></td><td><code>api_key=CHAVE_FORNECIDA_PELA_MB</code></td></tr>
+    </tbody></table>
+    <div class="alert alert-warn"><span class="icon">⚠️</span><div><strong>Onde inserir o Custom Parameter?</strong> Cada LMS tem um campo específico (veja as instruções da sua plataforma). O formato é sempre <code>api_key=VALOR</code> (sem espaços, sem aspas).</div></div>
+
+    <div class="alert alert-info"><span class="icon">📋</span><div><strong>Após a configuração</strong>, envie-nos os dados gerados pelo seu LMS (Client ID, Deployment ID e endpoints). Sem esses dados, não finalizamos a integração do nosso lado.</div></div>
+
+    <h3>⚡ Verificação importante antes de integrar</h3>
+    <p>O Minha Biblioteca utiliza nome e email dos usuários para autenticação. Problemas no cadastro do LMS causam falhas que <strong>nem sempre exibem mensagem de erro clara</strong>. Verifique antes de iniciar:</p>
+    <div class="gotcha-grid">
+      <div class="gotcha">
+        <h4>📧 Emails dos usuários devem ser válidos</h4>
+        <p>Todos os usuários precisam ter email completo e válido no cadastro do LMS (ex: <code>joao.silva@instituicao.edu.br</code>). Emails incompletos como <code>joao.silva</code> (sem domínio), <code>joao.silva@</code> (sem domínio após @) ou campos vazios causam falha no acesso à ferramenta.</p>
+        <p><strong>Dica:</strong> se importou usuários via planilha, revise a coluna de email antes de integrar.</p>
+      </div>
+      <div class="gotcha">
+        <h4>👤 Nomes devem estar completos (nome + sobrenome)</h4>
+        <p>O cadastro de cada usuário precisa ter <strong>nome e sobrenome</strong> (com espaço entre eles). Nomes como <code>JoaoSilva</code> (sem espaço) ou apenas <code>Joao</code> (sem sobrenome) podem impedir o acesso.</p>
+        <p><strong>Dica:</strong> verifique se os campos "First Name" e "Last Name" estão preenchidos corretamente no LMS.</p>
+      </div>
+      <div class="gotcha">
+        <h4>🔤 Caracteres especiais e acentos</h4>
+        <p>Nomes com acentos e caracteres especiais (João, André, María) são aceitos normalmente, desde que o LMS envie os dados em <strong>UTF-8</strong>. Se nomes aparecerem com caracteres estranhos após a integração, entre em contato conosco.</p>
+      </div>
+    </div>
   </div>
 </div>
+
+<!-- CANVAS -->
+<div class="platform-section" id="sec-canvas">
+  <div class="card"><h2>Pré-requisitos — Canvas</h2>
+    <ul><li>Canvas Cloud ou Self-Hosted</li><li>Acesso de <strong>Account Admin</strong> com permissão "Chaves do desenvolvedor - manage"</li><li>HTTPS habilitado</li></ul>
+  </div>
+
+  <div class="card">
+    <div class="step-header"><div class="step-num">1</div><h2>Criar a Chave do desenvolvedor</h2></div>
+    <p>Preencha os campos da Chave do desenvolvedor manualmente conforme os valores abaixo:</p>
+    <ol class="steps">
+      <li>Acesse o Canvas como administrador → <strong>Admin → Chaves do desenvolvedor</strong></li>
+    </ol>
+    <img src="imgs/canvas_interno_admin_chave_dev.png" alt="Admin → Chaves do desenvolvedor" class="guide-img guide-img-xs">
+    <ol class="steps" start="2">
+      <li>Clique em <strong>"+ Chave do desenvolvedor"</strong> → <strong>"+ Chave LTI"</strong></li>
+    </ol>
+    <img src="imgs/canvas_interno_chave_lti.png" alt="Criando LTI Key" class="guide-img guide-img-sm">
+    <ol class="steps" start="3">
+      <li>Em <strong>Método</strong>, selecione <strong>"Inserção manual"</strong></li>
+      <li>Preencha os campos:</li>
+    </ol>
+    <table class="table-env"><thead><tr><th>Campo</th><th>PRD — Produção</th><th>HMG — Homologação</th></tr></thead><tbody>
+      <tr><td>Nome da chave</td><td><code>Minha Biblioteca</code></td><td><code>Minha Biblioteca</code></td></tr>
+      <tr><td>URI do link de destino</td><td><code>https://fusion.minhabiblioteca.com.br/accounts/api/v1/lti/launch</code></td><td><code>https://fusion.green.stage.minhabiblioteca.dev/accounts/api/v1/lti/launch</code></td></tr>
+      <tr><td>URL de iniciação do OpenID Connect</td><td><code>https://fusion.minhabiblioteca.com.br/accounts/api/v1/lti/login</code></td><td><code>https://fusion.green.stage.minhabiblioteca.dev/accounts/api/v1/lti/login</code></td></tr>
+      <tr><td>Redirecionar URIs</td><td><code>https://fusion.minhabiblioteca.com.br/accounts/api/v1/lti/launch</code></td><td><code>https://fusion.green.stage.minhabiblioteca.dev/accounts/api/v1/lti/launch</code></td></tr>
+      <tr><td>Método JWK</td><td><strong>JWK pública (URL)</strong></td><td><strong>JWK pública (URL)</strong></td></tr>
+      <tr><td>JWK pública</td><td><code>https://fusion.minhabiblioteca.com.br/accounts/api/v1/lti/jwks</code></td><td><code>https://fusion.green.stage.minhabiblioteca.dev/accounts/api/v1/lti/jwks</code></td></tr>
+    </tbody></table>
+    <img src="imgs/canvas_interno_config_lti.png" alt="Formulário de configuração LTI preenchido" class="guide-img">
+    <ol class="steps" start="5">
+      <li>Em <strong>"Configurações adicionais"</strong>, defina Nível de privacidade = <strong>"Público"</strong></li>
+      <li>Ainda em Configurações adicionais, localize o campo <strong>"Posicionamentos"</strong> e adicione <strong>"Course Navigation"</strong> — isso faz a MB aparecer no menu lateral da disciplina</li>
+      <li>Ainda em Posicionamentos, expanda <strong>"Link Selection"</strong> e em <strong>"Selecionar tipo de mensagem"</strong> marque <strong>"LtiDeepLinkingRequest"</strong></li>
+    </ol>
+    <img src="imgs/canvas_interno_deep_link_config.png" alt="Configuração do Link Selection com LtiDeepLinkingRequest" class="guide-img">
+    <ol class="steps" start="8">
+      <li>Ainda em Configurações adicionais, vá até <strong>"Campos personalizados"</strong> e adicione: <code>api_key=CHAVE_FORNECIDA_PELA_MB</code></li>
+    </ol>
+    <img src="imgs/canvas_interno_setar_api_key_lti_config.png" alt="Campo api_key preenchido em Campos personalizados" class="guide-img">
+    <ol class="steps" start="9">
+      <li>Clique em <strong>"Salvar"</strong></li>
+      <li>Na lista, ative o toggle para <strong>"Ativado"</strong></li>
+    </ol>
+    <img src="imgs/canvas_interno_ativar_lti,.png" alt="Toggle da Chave do desenvolvedor ativado" class="guide-img guide-img-xs">
+    <div class="alert alert-warn"><span class="icon">⚠️</span><div><strong>Formato exato do api_key:</strong> <code>api_key=SuaChaveAqui</code> — sem espaços, sem aspas, sem quebra de linha. Substitua <code>SuaChaveAqui</code> pela chave que nossa equipe enviou.</div></div>
+    <div class="alert alert-info"><span class="icon">💡</span><div><strong>Ainda não tem a api_key?</strong> Sem problema — você pode criar a Chave do desenvolvedor agora sem preencher o campo <strong>"Campos personalizados"</strong>, copiar os IDs (Passo 2) e nos enviá-los (Passo 3). Depois que nossa equipe fornecer a chave, volte na Chave do desenvolvedor, clique em <strong>"Editar"</strong>, adicione o <code>api_key</code> em Campos personalizados e salve.</div></div>
+    <div class="alert alert-warn"><span class="icon">⚠️</span><div><strong>Atenção:</strong> A Chave do desenvolvedor é criada no estado "Desativado". Lembre-se de ativar o toggle para "Ativado", senão a ferramenta não funciona.</div></div>
+  </div>
+
+  <div class="card">
+    <div class="step-header"><div class="step-num">2</div><h2>Copiar os IDs gerados</h2></div>
+    <p>Após salvar a Chave do desenvolvedor, o Canvas exibe a chave na lista. Siga os passos para copiar os IDs necessários:</p>
+    <ol class="steps">
+      <li>Na lista de Chaves do desenvolvedor, localize a chave recém-criada</li>
+      <li>Na coluna <strong>Detalhes</strong>, clique em <strong>"Exibir no Canvas Apps"</strong></li>
+    </ol>
+    <img src="imgs/canvas_interno_exibir_canvas_app_criado.png" alt="Exibir no Canvas Apps" class="guide-img">
+    <ol class="steps" start="3">
+      <li>Copie e salve o <strong>Id do cliente</strong> exibido na tela</li>
+      <li>Na mesma tela, localize e copie o <strong>Id da implantação</strong></li>
+    </ol>
+    <img src="imgs/canvas_intero_coletar_ids_cliente_implantacao.png" alt="Coletando Id do cliente e Id da implantação" class="guide-img">
+    <ol class="steps" start="5">
+      <li>Ainda na mesma tela, clique no <strong>ícone de lápis</strong> (editar) ao lado da instalação</li>
+      <li>No dropdown que aparecer, altere de <strong>"Não disponível"</strong> para <strong>"Disponível"</strong> — isso garante que o app ficará ativo para os usuários</li>
+    </ol>
+    <img src="imgs/canvas_interno_setar_instalacao_como_ativa.png" alt="Alterando status da instalação para Disponível" class="guide-img guide-img-md">
+    <div class="alert alert-info"><span class="icon">💡</span><div>Você vai precisar do <strong>Id do cliente</strong> e do <strong>Id da implantação</strong> — junto com o domínio completo da sua instância (ex: <code>cliente.instructure.com</code>) — para enviar à nossa equipe no próximo passo.</div></div>
+  </div>
+
+  <div class="card">
+    <div class="step-header"><div class="step-num">3</div><h2>Dados para nos enviar</h2></div>
+    <div class="data-box"><h3>📤 Envie para nossa equipe:</h3><ul>
+      <li><strong>Id do cliente</strong> (copiado no Passo 2)</li>
+      <li><strong>Id da implantação</strong> (copiado no Passo 2)</li>
+      <li><strong>Domínio completo</strong> da instância (ex: <code>cliente.instructure.com</code>)</li>
+    </ul></div>
+  </div>
+
+  <div class="card">
+    <div class="step-header"><div class="step-num">4</div><h2>Gerenciar disponibilidade por sub-conta</h2></div>
+    <p>É possível controlar em quais sub-contas ou cursos a ferramenta fica disponível:</p>
+    <ol class="steps">
+      <li>Acesse <strong>Admin → Chaves do desenvolvedor</strong></li>
+      <li>Localize a Chave do desenvolvedor criada e clique em <strong>"Ver aplicativo"</strong> (link ao lado do toggle On/Off) — isso abre a aba <strong>Canvas Apps</strong></li>
+      <li>Na tela do aplicativo, acesse a aba <strong>"Disponibilidade e exceções"</strong></li>
+      <li>Para desabilitar em uma sub-conta específica, clique em <strong>"Adicionar exceção"</strong></li>
+      <li>Selecione a sub-conta desejada e altere de <strong>"Disponível"</strong> para <strong>"Não disponível"</strong></li>
+      <li>Clique em <strong>"Salvar"</strong></li>
+    </ol>
+    <img src="imgs/canvas_interno_disponibilidade_excecoes.png" alt="Gerenciar disponibilidade e exceções por sub-conta" class="guide-img guide-img-md">
+    <div class="alert alert-info"><span class="icon">💡</span><div><strong>Dica:</strong> Com essa funcionalidade você pode criar exceções para sub-contas que não devem ter acesso, sem precisar configurar curso a curso.</div></div>
+  </div>
+
+  <div class="card">
+    <div class="step-header"><div class="step-num">5</div><h2>Próximos passos — Guia do Professor</h2></div>
+    <p>Com a integração configurada, compartilhe o guia abaixo com os professores da instituição. Ele cobre o teste inicial, o acesso pelo menu lateral e o uso de Deep Linking para vincular livros e capítulos diretamente nos módulos da disciplina.</p>
+    <a href="Guia_Professor_Canvas.html" style="display:inline-flex;align-items:center;gap:10px;background:var(--navy);color:#fff;text-decoration:none;padding:12px 22px;border-radius:var(--radius);font-weight:700;font-size:14px;margin-top:8px">
+      <span>📘</span> Acessar Guia do Professor — Canvas →
+    </a>
+  </div>
+  <div class="card"><h2>Problemas comuns</h2>
+    <table><thead><tr><th>Problema</th><th>Solução</th></tr></thead><tbody>
+      <tr><td>"Invalid developer key"</td><td>Toggle da Chave do desenvolvedor está "On"? Client ID correto?</td></tr>
+      <tr><td>Tela em branco</td><td>Redirect URIs exatamente iguais (https://, barra final)</td></tr>
+      <tr><td>Usuário sem nome</td><td>Privacy Level = "Public" em Additional Settings</td></tr>
+      <tr><td>Erro ao acessar (só alguns usuários)</td><td>Email do usuário válido no LMS? (com @ e domínio completo). Nome com espaço entre nome e sobrenome?</td></tr>
+      <tr><td>Fica pedindo login repetidamente</td><td>Cookies de terceiros bloqueados no navegador. Testar com cookies habilitados</td></tr>
+      <tr><td>Funcionava e parou de funcionar</td><td>Verificar se um novo Deployment ID foi gerado (reinstalação da ferramenta)</td></tr>
+    </tbody></table>
+  </div>
+</div>
+
+<!-- MOODLE -->
+<div class="platform-section" id="sec-moodle">
+  <div class="card"><h2>Pré-requisitos — Moodle</h2>
+    <ul><li>Moodle 3.8+ (recomendado 4.x+)</li><li>Acesso de <strong>Site Administrator</strong></li><li>HTTPS habilitado</li></ul>
+  </div>
+  <div class="card">
+    <div class="step-header"><div class="step-num">1</div><h2>Registrar a Ferramenta</h2></div>
+    <div class="alert alert-info"><span class="icon">💡</span><div><strong>Dica de navegação:</strong> Em vez de navegar pelo menu, use a <strong>barra de pesquisa do painel administrativo</strong> e busque por "Ferramenta externa" — é o caminho mais direto e evita se perder nos submenus de Módulos de atividade.</div></div>
+    <ol class="steps">
+      <li><strong>Administração do site → Plugins → Módulos de atividade → Ferramenta externa (LTI) → Gerenciar ferramentas</strong></li>
+    </ol>
+    <img src="imgs/moodle_interno_admin_site.png" alt="Administração do site no Moodle" class="guide-img">
+    <img src="imgs/moodle_interno_gerenciar_Ferramentas.png" alt="Tela Gerenciar ferramentas" class="guide-img guide-img-md">
+    <ol class="steps" start="2">
+      <li>Clique em <strong>"Configurar uma ferramenta manualmente"</strong></li>
+    </ol>
+    <img src="imgs/moodle_interno_configurar_manualmente.png" alt="Botão Configurar uma ferramenta manualmente" class="guide-img">
+    <ol class="steps" start="3">
+      <li>Preencha os campos:</li>
+    </ol>
+    <table><thead><tr><th>Campo</th><th>Valor</th></tr></thead><tbody>
+      <tr><td>Nome da ferramenta</td><td><code>Minha Biblioteca</code></td></tr>
+      <tr><td>URL da ferramenta</td><td><code>https://fusion.minhabiblioteca.com.br/accounts/api/v1/lti/launch</code></td></tr>
+      <tr><td>Versão do LTI</td><td><strong>LTI 1.3</strong></td></tr>
+      <tr><td>Tipo de chave pública</td><td><strong>Keyset URL</strong></td></tr>
+      <tr><td>Public keyset</td><td><code>https://fusion.minhabiblioteca.com.br/accounts/api/v1/lti/jwks</code></td></tr>
+      <tr><td>Iniciar URL de login</td><td><code>https://fusion.minhabiblioteca.com.br/accounts/api/v1/lti/login</code></td></tr>
+      <tr><td>URI(s) de redirecionamento</td><td><code>https://fusion.minhabiblioteca.com.br/accounts/api/v1/lti/launch</code></td></tr>
+      <tr><td>Container de inicialização padrão</td><td><strong>Nova janela</strong> (para abrir a Minha Biblioteca em nova aba)</td></tr>
+      <tr><td>Parâmetros personalizados</td><td><code>api_key=CHAVE_FORNECIDA_PELA_MB</code></td></tr>
+    </tbody></table>
+    <img src="imgs/moodle_interno_configuracao_ferramenta_lti_1_3.png" alt="Formulário de configuração LTI 1.3 no Moodle preenchido" class="guide-img">
+    <ol class="steps" start="4">
+      <li>Role até a seção <strong>"Suporta Links Profundos (Mensagem de Item de Conteúdo)"</strong> — marque a caixa e preencha o campo <strong>"URL de Seleção de Conteúdo"</strong> com a mesma URL de launch: <code>https://fusion.minhabiblioteca.com.br/accounts/api/v1/lti/launch</code></li>
+    </ol>
+    <img src="imgs/moodle_interno_config_lti_deep_link.png" alt="Configuração de Suporta Links Profundos no Moodle" class="guide-img">
+    <ol class="steps" start="5">
+      <li>Em <strong>Privacidade</strong>: "Compartilhar nome do iniciador" e "Compartilhar e-mail do iniciador" = <strong>"Sempre"</strong>; marque também <strong>"Forçar SSL"</strong></li>
+      <li>Clique em <strong>"Salvar alterações"</strong></li>
+    </ol>
+    <div class="alert alert-success"><span class="icon">✅</span><div><strong>Pronto!</strong> Clique no ícone de engrenagem da ferramenta para ver os dados gerados pelo Moodle.</div></div>
+  </div>
+  <div class="card">
+    <div class="step-header"><div class="step-num">2</div><h2>Dados para nos enviar</h2></div>
+    <p>Na lista de ferramentas, localize a <strong>Minha Biblioteca</strong> e clique no ícone de <strong>lupa 🔍</strong>. Uma tela com todos os dados gerados será exibida — copie tudo e envie para nossa equipe.</p>
+    <img src="imgs/moodle_interno_lupa_dados_lti.png" alt="Ícone de lupa para ver dados LTI no Moodle" class="guide-img guide-img-sm">
+    <div class="data-box"><h3>📤 Exemplo dos dados a enviar:</h3><ul>
+      <li><strong>ID da plataforma:</strong> <code>https://moodle.suainstituicao.edu.br</code></li>
+      <li><strong>ID do cliente:</strong> <code>AbCdEfGhIjKlMnO</code></li>
+      <li><strong>ID de implantação:</strong> <code>1</code></li>
+      <li><strong>URL do conjunto de chaves públicas:</strong> <code>https://moodle.suainstituicao.edu.br/mod/lti/certs.php</code></li>
+      <li><strong>URL do token de acesso:</strong> <code>https://moodle.suainstituicao.edu.br/mod/lti/token.php</code></li>
+      <li><strong>URL de solicitação de autenticação:</strong> <code>https://moodle.suainstituicao.edu.br/mod/lti/auth.php</code></li>
+    </ul></div>
+    <div class="alert alert-info"><span class="icon">💡</span><div>Todos esses dados aparecem na mesma tela após clicar na lupa. Copie e envie o conjunto completo — sem precisar preencher campo a campo.</div></div>
+  </div>
+  <div class="card">
+    <div class="step-header"><div class="step-num">3</div><h2>Próximos passos — Guia do Professor</h2></div>
+    <p>Com a integração configurada, compartilhe o guia abaixo com os professores da instituição. Ele cobre o teste inicial, o acesso geral ao acervo e o uso de Deep Linking para vincular livros e capítulos diretamente nas disciplinas.</p>
+    <a href="Guia_Professor_Moodle.html" style="display:inline-flex;align-items:center;gap:10px;background:var(--navy);color:#fff;text-decoration:none;padding:12px 22px;border-radius:var(--radius);font-weight:700;font-size:14px;margin-top:8px">
+      <span>📘</span> Acessar Guia do Professor — Moodle →
+    </a>
+  </div>
+
+  <div class="card">
+    <div class="step-header"><div class="step-num">5</div><h2>Erros e suporte</h2></div>
+    <p>Se encontrar algum problema durante ou após a configuração, entre em contato com nossa equipe de suporte enviando:</p>
+    <ul>
+      <li>Descrição do erro encontrado</li>
+      <li>Print da mensagem de erro exibida</li>
+      <li>Print da configuração utilizada (tela de configuração da ferramenta no Moodle)</li>
+    </ul>
+    <div class="alert alert-info"><span class="icon">💡</span><div>Com essas informações, nosso time consegue diagnosticar e resolver o problema com muito mais agilidade.</div></div>
+  </div>
+</div>
+
+<!-- BLACKBOARD -->
+<div class="platform-section" id="sec-blackboard">
+  <div class="card"><h2>Pré-requisitos — Blackboard</h2>
+    <ul><li>Blackboard Learn SaaS (Ultra ou Original)</li><li><strong>System Administrator</strong></li><li>HTTPS habilitado</li></ul>
+    <div class="alert alert-info"><span class="icon">💡</span><div><strong>Diferente das outras plataformas:</strong> nós forneceremos o Client ID para você.</div></div>
+  </div>
+  <div class="card">
+    <div class="step-header"><div class="step-num">1</div><h2>Registrar a Ferramenta</h2></div>
+    <ol class="steps">
+      <li><strong>System Admin → Integrations → LTI Tool Providers</strong></li>
+      <li>Clique em <strong>"Register LTI 1.3/Advantage Tool"</strong></li>
+      <li>Insira o <strong>Client ID que fornecemos</strong> → "Submit"</li>
+      <li>Configure: Tool Status = <strong>"Approved"</strong>, habilite compartilhamento de Role, Name e Email</li>
+    </ol>
+  </div>
+  <div class="card">
+    <div class="step-header"><div class="step-num">2</div><h2>Criar o Placement</h2></div>
+    <ol class="steps">
+      <li>Na tela de detalhes do Tool Provider → aba <strong>"Placements"</strong> → <strong>"Create Placement"</strong></li>
+      <li>Preencha os campos:</li>
+    </ol>
+    <table><thead><tr><th>Campo</th><th>Valor</th></tr></thead><tbody>
+      <tr><td>Label</td><td><code>Minha Biblioteca</code></td></tr>
+      <tr><td>Handle</td><td><code>minha-biblioteca</code> (identificador único, sem espaços)</td></tr>
+      <tr><td>Availability</td><td><strong>Yes</strong></td></tr>
+      <tr><td>Type</td><td><strong>Deep Linking content tool</strong></td></tr>
+      <tr><td>Target Link URI</td><td><code>https://fusion.minhabiblioteca.com.br/accounts/api/v1/lti/launch</code></td></tr>
+      <tr><td>Custom Parameters</td><td><code>api_key=CHAVE_FORNECIDA_PELA_MB</code></td></tr>
+    </tbody></table>
+    <div class="alert alert-warn"><span class="icon">⚠️</span><div><strong>Atenção:</strong> O Type <strong>deve</strong> ser "Deep Linking content tool". Na aba Type, outras opções como <em>Allow student access</em> e <em>Allow course tool</em> podem ser habilitadas conforme necessidade. Não esqueça do custom parameter <code>api_key</code>.</div></div>
+  </div>
+  <div class="card">
+    <div class="step-header"><div class="step-num">3</div><h2>Dados para nos enviar</h2></div>
+    <div class="data-box"><h3>📤 Envie para nossa equipe:</h3><ul>
+      <li><strong>Application ID</strong></li>
+      <li><strong>Deployment ID</strong></li>
+      <li><strong>Domínio</strong> da instância (ex: <code>https://blackboard.suainstituicao.edu.br</code>)</li>
+      <li><strong>Issuer</strong> (<code>https://blackboard.com</code> para SaaS)</li>
+      <li><strong>JWKS URL</strong>, <strong>Token Endpoint</strong>, <strong>Auth Endpoint</strong></li>
+    </ul></div>
+    <div class="alert alert-info"><span class="icon">💡</span><div><strong>Onde encontrar os URLs técnicos:</strong> Após registrar a ferramenta, acesse <strong>System Admin → Integrations → LTI Tool Providers</strong> e clique na ferramenta registrada. As URLs de JWKS, Token Endpoint e Auth Endpoint são exibidas na seção de informações da plataforma.</div></div>
+  </div>
+
+  <div class="card">
+    <div class="step-header"><div class="step-num">4</div><h2>Teste</h2></div>
+    <ol class="steps">
+      <li>Acesse um curso de teste como professor</li>
+      <li>Adicione a ferramenta LTI ao conteúdo do curso (o caminho varia entre Blackboard Ultra e Original)</li>
+      <li>Clique no link criado — você deve ser redirecionado para a Minha Biblioteca (biblioteca geral)</li>
+      <li>Se a ferramenta abrir corretamente, a integração está funcionando</li>
+    </ol>
+    <div class="alert alert-warn"><span class="icon">⚠️</span><div><strong>Versões do Blackboard:</strong> O fluxo de adicionar uma ferramenta LTI difere entre o <strong>Blackboard Ultra</strong> e o <strong>Blackboard Original</strong>. Consulte a documentação da sua versão caso o caminho não esteja claro.</div></div>
+  </div>
+
+  <div class="card">
+    <div class="step-header"><div class="step-num">5</div><h2>Como o professor vincula livros e conteúdos</h2></div>
+    <p>Após a configuração acima, o professor pode disponibilizar a Minha Biblioteca de duas formas:</p>
+    <h3>Opção A — Acesso geral</h3>
+    <p>O professor adiciona a MB como ferramenta no conteúdo do curso (Ultra: Content Market / Original: Build Content → External Tool). O aluno clica e acessa a home da MB — busca livre no acervo.</p>
+    <h3>Opção B — Link direto para livro ou página específica (Deep Linking)</h3>
+    <ol class="steps">
+      <li>Professor seleciona a Minha Biblioteca como ferramenta ao adicionar conteúdo no curso</li>
+      <li>A interface de seleção da MB abre automaticamente — professor seleciona livros ou coleta URLs de páginas</li>
+      <li>Cada seleção vira um item independente no conteúdo do curso; aluno clica e vai direto ao conteúdo escolhido</li>
+    </ol>
+    <div class="alert alert-info"><span class="icon">💡</span><div><strong>Dica para orientar os professores:</strong> O Deep Linking é o método recomendado para leituras dirigidas. O Placement configurado nos passos anteriores já suporta o fluxo. Compartilhe o <strong>Guia do Professor</strong> (link acima) para facilitar a adoção.</div></div>
+  </div>
+
+  <div class="card">
+    <div class="step-header"><div class="step-num">5</div><h2>Próximos passos — Guia do Professor</h2></div>
+    <p>Com a integração configurada, compartilhe o guia abaixo com os professores da instituição. Ele cobre o teste inicial, o acesso pelo menu lateral e o uso de Deep Linking para vincular livros e capítulos diretamente nos módulos da disciplina.</p>
+    <a href="Guia_Professor_Blackboard.html" style="display:inline-flex;align-items:center;gap:10px;background:var(--navy);color:#fff;text-decoration:none;padding:12px 22px;border-radius:var(--radius);font-weight:700;font-size:14px;margin-top:8px">
+      <span>📘</span> Acessar Guia do Professor — Blackboard →
+    </a>
+  </div>
+</div>
+
+<!-- BRIGHTSPACE -->
+<div class="platform-section" id="sec-brightspace">
+  <div class="card"><h2>Pré-requisitos — D2L Brightspace</h2>
+    <ul><li>Brightspace versão 20.21.1+</li><li><strong>Super Administrator</strong> ou Admin com "Manage External Learning Tools"</li><li>HTTPS habilitado</li></ul>
+  </div>
+  <div class="card">
+    <div class="step-header"><div class="step-num">1</div><h2>Registrar a Ferramenta LTI (Extensibilidade)</h2></div>
+    <p>Existem duas formas de registrar. Recomendamos o <strong>Método A</strong> (Dinâmico) por ser mais rápido.</p>
+
+    <h3>🚀 Método A — Registro Dinâmico (Recomendado)</h3>
+    <ol class="steps">
+      <li>Acesse o Brightspace → clique na <strong>engrenagem ⚙️ (Admin)</strong></li>
+    </ol>
+    <img src="imgs/d2l_engrenagem_extensibilidade.png" alt="Engrenagem Admin no Brightspace" class="guide-img guide-img-md">
+    <ol class="steps" start="2">
+      <li>Navegue até <strong>Extensibilidade → LTI Advantage</strong></li>
+    </ol>
+    <img src="imgs/d2l_lti_advantage.png" alt="Tela LTI Advantage no Brightspace" class="guide-img">
+    <ol class="steps" start="3">
+      <li>Clique em <strong>"Registrar ferramenta"</strong> → selecione <strong>"Dinâmico"</strong></li>
+      <li>Cole a URL de registro dinâmico fornecida pela nossa equipe</li>
+      <li>Clique em <strong>"Registrar"</strong> — o Brightspace preencherá os campos automaticamente</li>
+      <li>Revise os dados e clique em <strong>"Save"</strong></li>
+    </ol>
+    <div class="alert alert-success"><span class="icon">✅</span><div><strong>Vantagem:</strong> todos os endpoints, redirect URLs e extensões são preenchidos automaticamente.</div></div>
+
+    <h3>📝 Método B — Registro Padrão (Manual)</h3>
+    <p>Se não tiver a URL de registro dinâmico, registre manualmente:</p>
+    <ol class="steps">
+      <li>Acesse o Brightspace → clique na <strong>engrenagem ⚙️ (Admin)</strong></li>
+      <li>Navegue até <strong>Extensibilidade → LTI Advantage</strong></li>
+      <li>Clique em <strong>"Registrar ferramenta"</strong> → selecione <strong>"Padrão"</strong></li>
+      <li>Preencha os campos:</li>
+    </ol>
+    <table><thead><tr><th>Campo</th><th>Valor</th></tr></thead><tbody>
+      <tr><td>Nome</td><td><code>Minha Biblioteca</code></td></tr>
+      <tr><td>Domínio</td><td><code>fusion.minhabiblioteca.com.br</code></td></tr>
+      <tr><td>Redirecionar URLs</td><td><code>https://fusion.minhabiblioteca.com.br/accounts/api/v1/lti/launch</code></td></tr>
+      <tr><td>URL de login do OpenID Connect</td><td><code>https://fusion.minhabiblioteca.com.br/accounts/api/v1/lti/login</code></td></tr>
+      <tr><td>URI do link de destino</td><td><code>https://fusion.minhabiblioteca.com.br/accounts/api/v1/lti/launch</code></td></tr>
+      <tr><td>URL do conjunto de chaves</td><td><code>https://fusion.minhabiblioteca.com.br/accounts/api/v1/lti/jwks</code></td></tr>
+    </tbody></table>
+    <img src="imgs/d2l_interno_registrar_lti_1.png" alt="Formulário de registro LTI no Brightspace — parte 1" class="guide-img">
+    <img src="imgs/d2l_interno_registrar_lti_2.png" alt="Formulário de registro LTI no Brightspace — parte 2" class="guide-img">
+    <img src="imgs/d2l_interno_registrar_lti_3_parametro_custom.png" alt="Campo de parâmetro customizado no Brightspace" class="guide-img">
+    <ol class="steps" start="5">
+      <li>Clique em <strong>"Salvar"</strong></li>
+    </ol>
+    <div class="alert alert-info"><span class="icon">💡</span><div>Após salvar, na mesma tela o Brightspace exibirá os detalhes do registro — são esses dados que você precisa encaminhar para o time da Minha Biblioteca.</div></div>
+  </div>
+  <div class="card">
+    <div class="step-header"><div class="step-num">2</div><h2>Implantações</h2></div>
+    <div class="alert alert-warn"><span class="icon">⚠️</span><div><strong>Sem a implantação, a ferramenta não aparece em nenhum curso.</strong></div></div>
+    <ol class="steps">
+      <li>Ainda na tela de configuração do LTI, clique em <strong>"Exibir implantações"</strong></li>
+    </ol>
+    <img src="imgs/d2l_interno_exibir_implantacao.png" alt="Botão Exibir implantações no Brightspace" class="guide-img guide-img-md">
+    <ol class="steps" start="2">
+      <li>Clique em <strong>"Nova implantação"</strong> — uma nova aba será aberta</li>
+    </ol>
+    <img src="imgs/d2l_interno_nova_implantacao.png" alt="Botão Nova implantação no Brightspace" class="guide-img guide-img-md">
+    <ol class="steps" start="3">
+      <li>Escolha a ferramenta criada previamente</li>
+      <li>Marque as opções em <strong>Configuração de segurança</strong> e <strong>Definição de configuração</strong> conforme a imagem</li>
+    </ol>
+    <img src="imgs/d2l_interno_implantacao_configuracao_selecionar_ferramenta.png" alt="Configuração de segurança e seleção de ferramenta na implantação" class="guide-img">
+    <img src="imgs/d2l_interno_marcar_opcoes.png" alt="Opções de segurança e configuração a marcar na implantação" class="guide-img">
+    <ol class="steps" start="5">
+      <li>Clique em <strong>"Salvar"</strong></li>
+    </ol>
+    <div class="alert alert-info"><span class="icon">💡</span><div>Ao salvar, será gerado um <strong>ID de implantação</strong> ao final da página — esse dado também precisa ser enviado para o time da Minha Biblioteca.</div></div>
+    <ol class="steps" start="6">
+      <li>Clique em <strong>"Exibir Links"</strong></li>
+    </ol>
+    <img src="imgs/d2l_interno_configuracao_implantacao_exibir_links.png" alt="Botão Exibir Links após implantação no Brightspace" class="guide-img guide-img-md">
+  </div>
+  <div class="card">
+    <div class="step-header"><div class="step-num">3</div><h2>Criar o Link</h2></div>
+    <ol class="steps">
+      <li>Na tela de Links, clique em <strong>"Novo"</strong></li>
+    </ol>
+    <img src="imgs/d2l_interno_novos_links.png" alt="Botão Novo para criar link no Brightspace" class="guide-img guide-img-md">
+    <ol class="steps" start="2">
+      <li>Preencha o <strong>Nome</strong>, a <strong>URL</strong> (use a URL de launch <code>/accounts/api/v1/lti/launch</code> do ambiente correspondente) e a <strong>Descrição</strong></li>
+      <li>Em <strong>Tipo</strong>, escolha conforme o uso desejado:</li>
+    </ol>
+    <img src="imgs/d2l_interno_tipo_basico_ou_quicklink.png" alt="Opções de tipo de link no Brightspace: Lançamento básico ou Link direto do quicklink" class="guide-img guide-img-md">
+    <ul style="margin:8px 0 12px 24px;line-height:2">
+      <li><strong>Deep Link:</strong> escolha <strong>"Link direto do quicklink"</strong> e defina a largura e altura para o seletor de conteúdo — permite que o professor selecione livros e páginas específicas diretamente</li>
+      <li><strong>Catálogo padrão:</strong> escolha <strong>"Lançamento básico"</strong> — abre a home da Minha Biblioteca</li>
+    </ul>
+    <ol class="steps" start="4">
+      <li>Em <strong>Parâmetros personalizados</strong>, adicione a chave <code>api_key</code> e o valor fornecido pela Minha Biblioteca</li>
+      <li>Clique em <strong>"Salvar"</strong></li>
+    </ol>
+    <img src="imgs/d2l_interno_criar_link_configuracao.png" alt="Formulário completo de criação de link LTI no Brightspace" class="guide-img">
+  </div>
+  <div class="card">
+    <div class="step-header"><div class="step-num">4</div><h2>Dados para nos enviar</h2></div>
+    <div class="data-box"><h3>📤 Envie para nossa equipe:</h3><ul>
+      <li><strong>Client ID</strong> e <strong>Deployment ID</strong></li>
+      <li><strong>Issuer</strong> (URL do seu Brightspace, ex: <code>https://suainstituicao.brightspace.com</code>)</li>
+      <li><strong>JWKS URL</strong> (ex: <code>https://suainstituicao.brightspace.com/d2l/.well-known/jwks</code>)</li>
+      <li><strong>OpenID Auth Endpoint</strong> (ex: <code>https://suainstituicao.brightspace.com/d2l/lti/authenticate</code>)</li>
+      <li><strong>OAuth2 Token Endpoint</strong> (SaaS: <code>https://auth.brightspace.com/core/connect/token</code>)</li>
+      <li><strong>OAuth2 Target Audience</strong> (SaaS: <code>https://api.brightspace.com/auth/token</code>)</li>
+    </ul></div>
+    <div class="alert alert-info"><span class="icon">💡</span><div><strong>Brightspace SaaS:</strong> Token Endpoint e Target Audience são centralizados pela D2L. Os demais endpoints usam o domínio da sua instância.</div></div>
+  </div>
+  <div class="card">
+    <div class="step-header"><div class="step-num">5</div><h2>Próximos passos — Guia do Professor</h2></div>
+    <p>Com a integração configurada, compartilhe o guia abaixo com os professores da instituição. Ele cobre o acesso geral ao acervo e o uso de Deep Linking para vincular livros e capítulos diretamente nas disciplinas.</p>
+    <a href="Guia_Professor_Brightspace.html" style="display:inline-flex;align-items:center;gap:10px;background:var(--navy);color:#fff;text-decoration:none;padding:12px 22px;border-radius:var(--radius);font-weight:700;font-size:14px;margin-top:8px">
+      <span>📘</span> Acessar Guia do Professor — Brightspace →
+    </a>
+  </div>
+  <div class="card"><h2>Problemas comuns</h2>
+    <table><thead><tr><th>Problema</th><th>Solução</th></tr></thead><tbody>
+      <tr><td>Ferramenta não aparece nos cursos</td><td>Deployment criado? Org Units corretas? Enable está ativo?</td></tr>
+      <tr><td>Deep Linking não funciona</td><td>Extensions habilitadas no registro E no Deployment?</td></tr>
+      <tr><td>Usuário sem nome/email</td><td>Security Settings: Role, Name e Email habilitados?</td></tr>
+      <tr><td>Tela em branco ou erro</td><td>Redirect URLs corretas? Domain sem https://</td></tr>
+      <tr><td>Cookies bloqueados</td><td>Testar com cookies de terceiros habilitados</td></tr>
+    </tbody></table>
+  </div>
+</div>
+
+<!-- A-LXP -->
+<div class="platform-section" id="sec-alxp">
+  <div class="card">
+    <h2>A-LXP (Grupo A)</h2>
+    <div class="alert alert-info"><span class="icon">💡</span><div><strong>Plataforma proprietária do Grupo A Educação.</strong> A interface é 100% em português. Recomendamos configuração em conjunto com o suporte do Grupo A e da nossa equipe.</div></div>
+  </div>
+
+  <div class="card">
+    <div class="step-header"><div class="step-num">1</div><h2>Acessar Provedores LTI</h2></div>
+    <ol class="steps">
+      <li>Faça login na A-LXP como <strong>administrador</strong></li>
+      <li>No menu lateral, clique em <strong>Configurações</strong> (ícone de engrenagem)</li>
+      <li>No submenu, clique em <strong>Provedores LTI</strong></li>
+      <li>Você verá a lista de provedores LTI já cadastrados (se houver)</li>
+    </ol>
+    <img src="imgs/lxp_cliente_menu_laterial_lti.png" alt="Menu lateral com opção Provedores LTI na A-LXP" class="guide-img guide-img-sm">
+  </div>
+
+  <div class="card">
+    <div class="step-header"><div class="step-num">2</div><h2>Adicionar Provedor LTI 1.3</h2></div>
+    <p>Na tela de Provedores LTI, clique no botão <strong>+ Adicionar provedor</strong>. Um modal será exibido com os campos abaixo:</p>
+
+    <h3>Dados Gerais</h3>
+    <table><thead><tr><th>Campo</th><th>Valor</th></tr></thead><tbody>
+      <tr><td>Domínio</td><td><code>fusion.minhabiblioteca.com.br</code></td></tr>
+    </tbody></table>
+
+    <h3>LTI</h3>
+    <table><thead><tr><th>Campo</th><th>Valor</th></tr></thead><tbody>
+      <tr><td>Versão do LTI</td><td>Selecione <strong>1.3</strong> (ao trocar de 1.1 para 1.3, novos campos aparecerão)</td></tr>
+      <tr><td>URL de JWKS</td><td><code>https://fusion.minhabiblioteca.com.br/.well-known/jwks.json</code></td></tr>
+      <tr><td>URL de login</td><td><code>https://fusion.minhabiblioteca.com.br/accounts/api/v1/lti/login</code></td></tr>
+      <tr><td>URLs de direcionamento</td><td><code>https://fusion.minhabiblioteca.com.br/accounts/api/v1/lti/launch</code></td></tr>
+    </tbody></table>
+
+    <h3>Parâmetros Customizados</h3>
+    <p>Ative o toggle <strong>Usar parâmetros customizados</strong> e preencha:</p>
+    <table><thead><tr><th>Chave</th><th>Valor</th></tr></thead><tbody>
+      <tr><td><code>api_key</code></td><td><code>CHAVE_FORNECIDA_PELA_MB</code></td></tr>
+    </tbody></table>
+    <img src="imgs/lxp_cliente_param_custom_api_key.png" alt="Campo de parâmetro customizado api_key na A-LXP" class="guide-img">
+    <div class="alert alert-info"><span class="icon">💡</span><div><strong>Sobre o api_key:</strong> Este valor é fornecido pela equipe Minha Biblioteca durante o processo de onboarding. É obrigatório para autenticação do launch LTI.</div></div>
+
+    <p>Clique em <strong>Salvar</strong>.</p>
+  </div>
+
+  <div class="card">
+    <div class="step-header"><div class="step-num">3</div><h2>Copiar os Detalhes da Configuração</h2></div>
+    <p>Após salvar, abra a tela de <strong>Editar provedor</strong> (clique nos três pontinhos do provedor → <em>Configurar</em>). No lado direito, aparecerá o card <strong>Detalhes da configuração</strong> com os dados gerados pela plataforma.</p>
+    <div class="alert alert-warn"><span class="icon">⚠️</span><div><strong>Esses dados são gerados automaticamente pela A-LXP.</strong> Você não precisa preencher — apenas copiar e enviar para a nossa equipe.</div></div>
+  </div>
+
+  <div class="card">
+    <div class="step-header"><div class="step-num">4</div><h2>Dados para nos enviar</h2></div>
+    <p>Na tela <strong>Informações do provedor</strong> (três pontinhos → <em>Informações do provedor</em>), copie todos os dados abaixo e envie para a nossa equipe:</p>
+    <div class="data-box"><h3>📤 Envie para nossa equipe:</h3><ul>
+      <li><strong>ID de implantação</strong> (Deployment ID) — ex: <code>wZEsa9nuSm</code></li>
+      <li><strong>ID do cliente</strong> (Client ID) — ex: <code>40ec3514-a89e-4cb0-91d4-3b94eabd5084</code></li>
+      <li><strong>ID da plataforma</strong> (Issuer) — ex: <code>https://api.plataforma.grupoa.education/v3/safea</code></li>
+      <li><strong>URL de solicitação de autorização</strong> (Auth Endpoint) — ex: <code>https://api.plataforma.grupoa.education/v3/safea/oauth2/authorize</code></li>
+      <li><strong>URL do token de acesso</strong> (Token Endpoint) — ex: <code>https://api.plataforma.grupoa.education/v3/safea/oauth2/token</code></li>
+      <li><strong>URL do conjunto de chaves públicas</strong> (JWKS URL) — ex: <code>https://api.plataforma.grupoa.education/v3/safea/oauth2/certs</code></li>
+    </ul></div>
+    <div class="alert alert-info"><span class="icon">💡</span><div><strong>Dica:</strong> Use o botão <strong>"Copiar tudo"</strong> no topo do card de Detalhes da configuração para copiar todos os valores de uma vez.</div></div>
+  </div>
+
+  <div class="card">
+    <div class="step-header"><div class="step-num">5</div><h2>Próximos passos — Guia do Professor</h2></div>
+    <p>Com a integração configurada, compartilhe o guia abaixo com os professores da instituição. Ele cobre como adicionar links de acesso ao catálogo e a livros ou páginas específicas diretamente nas disciplinas.</p>
+    <a href="Guia_Professor_ALXP.html" style="display:inline-flex;align-items:center;gap:10px;background:var(--navy);color:#fff;text-decoration:none;padding:12px 22px;border-radius:var(--radius);font-weight:700;font-size:14px;margin-top:8px">
+      <span>📘</span> Acessar Guia do Professor — A-LXP →
+    </a>
+  </div>
+</div>
+
+
+<div class="support-card">
+  <h2>Precisa de ajuda?</h2>
+  <p>Entre em contato com nossa equipe de suporte técnico.<br>
+  Ao reportar um problema, inclua: LMS e versão, mensagem de erro, passos realizados e screenshot.</p>
+</div>
+
+</div>
+
+<script>
+(function(){
+  const nav=document.querySelector('.plat-nav');
+  const btns=[...nav.querySelectorAll('.plat-btn')];
+  const sections=btns.map(b=>document.querySelector(b.getAttribute('href')));
+  function onScroll(){
+    const offset=nav.offsetHeight+nav.getBoundingClientRect().top+40;
+    let activeIdx=0;
+    sections.forEach((s,i)=>{if(s.getBoundingClientRect().top<=offset)activeIdx=i;});
+    btns.forEach(b=>b.classList.remove('active'));
+    btns[activeIdx].classList.add('active');
+  }
+  window.addEventListener('scroll',onScroll,{passive:true});
+  onScroll();
+})();
+</script>
 </body>
 </html>
-<!-- deploy test 1786736922 -->

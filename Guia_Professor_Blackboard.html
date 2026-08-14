@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guia do Professor — Minha Biblioteca no Blackboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --navy:#0A2342;--blue:#007DB7;--blue-bg:rgba(0,125,183,.06);--blue-border:rgba(0,125,183,.15);
+  --green:#AECA0C;--green-bg:rgba(174,202,12,.1);--green-border:rgba(174,202,12,.3);
+  --white:#fff;--light:#F3F5F9;--gray:#E5E8ED;
+  --text:#1E2325;--text-mid:#4A5568;--text-light:#6B7780;
+  --warn:#E6930A;--warn-bg:#FEF8EC;--warn-border:#FCECC5;
+  --success:#16A34A;--success-bg:#EEFBF3;--success-border:#C6F0D4;
+  --lms:#7c3aed;--lms-bg:rgba(124,58,237,.06);--lms-border:rgba(124,58,237,.2);
+  --radius:12px;--font:'Montserrat',sans-serif;
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--font);background:var(--light);color:var(--text);line-height:1.75;-webkit-font-smoothing:antialiased}
+.page{max-width:1200px;margin:0 auto;padding:0 40px 100px}
+.hero{background:var(--navy);color:#fff;text-align:center;padding:52px 24px 44px;margin:0 -24px 0;position:relative;overflow:hidden}
+.hero::after{content:'';position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:60px;height:3px;background:var(--green);border-radius:3px}
+.hero-logo{height:34px;margin-bottom:20px}
+.hero-badge-row{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:18px}
+.hero-badge{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:5px 14px;border-radius:30px}
+.badge-lms{background:rgba(124,58,237,.2);color:#c4b5fd}
+.badge-prof{background:rgba(174,202,12,.15);color:var(--green)}
+.hero h1{font-size:2rem;font-weight:800;letter-spacing:-.03em;margin-bottom:10px;line-height:1.2}
+.hero h1 span{color:var(--green)}
+.hero p{font-size:.95rem;color:rgba(255,255,255,.7);max-width:480px;margin:0 auto}
+.nav-row{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;padding:24px 0 28px;position:sticky;top:0;z-index:100;background:var(--light)}
+.nav-btn{display:flex;align-items:center;gap:7px;padding:9px 18px;border-radius:30px;border:1.5px solid var(--gray);background:var(--white);color:var(--text-light);font-family:var(--font);font-size:13px;font-weight:600;cursor:pointer;transition:all .2s;text-decoration:none}
+.nav-btn:hover{border-color:var(--blue);color:var(--blue)}
+.nav-btn.active{background:var(--lms);color:#fff;border-color:var(--lms)}
+.card{background:var(--white);border:1px solid var(--gray);border-radius:var(--radius);padding:28px 32px;margin-bottom:20px;box-shadow:0 2px 8px rgba(10,35,66,.04)}
+.card h2{font-size:1.15rem;font-weight:700;margin-bottom:12px;color:var(--navy)}
+.card h3{font-size:1rem;font-weight:700;margin:22px 0 10px;color:var(--navy)}
+.card p{color:var(--text);margin-bottom:12px;font-size:15px}
+.section-header{display:flex;align-items:center;gap:16px;padding:20px 24px;background:var(--navy);border-radius:var(--radius) var(--radius) 0 0;margin:-28px -32px 24px;border-bottom:3px solid var(--green)}
+.section-header .ico{font-size:2rem}
+.section-header .info h2{margin:0;font-size:1.2rem;color:#fff;font-weight:700}
+.section-header .info p{margin:0;font-size:12px;color:rgba(255,255,255,.55)}
+.steps{counter-reset:step;list-style:none;margin:12px 0 16px;padding:0}
+.steps li{counter-increment:step;display:flex;gap:14px;align-items:flex-start;padding:10px 14px;border-radius:8px;margin-bottom:3px;font-size:14px;transition:background .15s}
+.steps li:hover{background:var(--light)}
+.steps li::before{content:counter(step);width:26px;height:26px;border-radius:50%;background:var(--blue-bg);color:var(--blue);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;flex-shrink:0;margin-top:2px}
+.option-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:20px 0}
+@media(max-width:640px){.option-grid{grid-template-columns:1fr}}
+.option-card{border-radius:var(--radius);padding:20px 22px;border:2px solid}
+.option-card--a{border-color:var(--blue-border);background:var(--blue-bg)}
+.option-card--b{border-color:var(--green-border);background:var(--green-bg)}
+.option-card__label{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px}
+.option-card--a .option-card__label{color:var(--blue)}
+.option-card--b .option-card__label{color:#5a7200}
+.option-card h3{margin:0 0 8px;font-size:1rem;color:var(--navy);font-weight:700}
+.option-card p{margin:0;font-size:13px;color:var(--text-mid);line-height:1.6}
+.option-card .tag-rec{display:inline-block;background:#dcfce7;color:#166534;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;margin-top:6px;letter-spacing:.04em;text-transform:uppercase}
+.dl-flow{display:flex;flex-direction:column;gap:0;margin:20px 0 8px;position:relative}
+.dl-step{display:flex;gap:14px;padding:14px 0;position:relative}
+.dl-step::before{content:'';position:absolute;left:15px;top:38px;bottom:0;width:2px;background:var(--green-border)}
+.dl-step:last-child::before{display:none}
+.dl-num{width:32px;height:32px;border-radius:50%;background:var(--green);color:var(--navy);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.8rem;flex-shrink:0;z-index:1}
+.dl-body h4{margin:0 0 3px;font-size:14px;font-weight:700;color:var(--navy)}
+.dl-body p{margin:0;font-size:13px;line-height:1.6;color:var(--text-mid)}
+.alert{border-radius:var(--radius);padding:14px 18px;margin:14px 0;display:flex;gap:10px;align-items:flex-start;font-size:14px;line-height:1.6}
+.alert .ico{font-size:1rem;flex-shrink:0;margin-top:2px}
+.alert-info{background:var(--blue-bg);border:1px solid var(--blue-border)}
+.alert-info strong{color:var(--blue)}
+.alert-warn{background:var(--warn-bg);border:1px solid var(--warn-border)}
+.alert-warn strong{color:var(--warn)}
+.alert-success{background:var(--success-bg);border:1px solid var(--success-border)}
+.alert-success strong{color:var(--success)}
+.nav-path{display:inline-flex;align-items:center;gap:4px;background:#f1f5f9;border:1px solid var(--gray);border-radius:8px;padding:6px 12px;font-size:13px;font-weight:600;color:var(--navy);margin:8px 0 16px;flex-wrap:wrap}
+.nav-path span{color:var(--text-light);font-size:12px;font-weight:400;margin:0 2px}
+.nav-path em{font-style:normal;color:var(--lms)}
+.result-box{background:var(--navy);border-radius:var(--radius);padding:16px 20px;margin:16px 0;display:flex;gap:12px;align-items:flex-start}
+.result-box .ico{font-size:1.2rem;flex-shrink:0}
+.result-box p{margin:0;font-size:13px;color:rgba(255,255,255,.85);line-height:1.6}
+.result-box strong{color:#fff}
+.version-tabs{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:16px 0}
+.version-tab{border-radius:var(--radius);padding:16px 18px;border:2px solid var(--gray);background:var(--white)}
+.version-tab__label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;color:var(--text-light)}
+.version-tab h4{font-size:14px;font-weight:700;color:var(--navy);margin-bottom:6px}
+.version-tab p{font-size:13px;color:var(--text-mid);margin:0;line-height:1.6}
+table{width:100%;border-collapse:separate;border-spacing:0;margin:12px 0 16px;border-radius:var(--radius);overflow:hidden;border:1px solid var(--gray);font-size:14px}
+thead{background:var(--navy)}
+th{padding:10px 16px;text-align:left;font-weight:700;color:#fff;font-size:11px;letter-spacing:.05em;text-transform:uppercase}
+td{padding:9px 16px;border-bottom:1px solid var(--light);color:var(--text)}
+tr:last-child td{border-bottom:none}
+tbody tr:hover{background:var(--light)}
+.support-card{background:var(--navy);color:#fff;border-radius:var(--radius);padding:36px;margin-top:32px;text-align:center}
+.support-card h2{color:#fff;margin-bottom:6px;font-size:1.15rem}
+.support-card p{color:rgba(255,255,255,.7);font-size:13px;margin-bottom:0}
+.section-anchor{scroll-margin-top:72px}
+@media(max-width:640px){.hero h1{font-size:1.65rem}.card{padding:20px 18px}.version-tabs{grid-template-columns:1fr}}
+@media print{.nav-row{display:none}.hero{padding:28px 20px 24px;-webkit-print-color-adjust:exact;print-color-adjust:exact}.page{padding:0 12px 0}.card{break-inside:avoid;box-shadow:none;border:1px solid #ddd;margin-bottom:14px}.alert,.result-box,.option-card,.dl-step,.version-tab{break-inside:avoid}table{break-inside:avoid}.section-header{-webkit-print-color-adjust:exact;print-color-adjust:exact}.support-card{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
+</style>
+</head>
+<body>
+<div class="page">
+
+<div class="hero">
+  <a href="index.html" style="display:inline-flex;align-items:center;gap:5px;color:rgba(255,255,255,.6);font-size:12px;font-weight:600;text-decoration:none;margin-bottom:16px" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,.6)'">← Voltar ao Hub</a><br>
+  <img src="./imgs/mb-new.png.webp" alt="Minha Biblioteca" class="hero-logo">
+  <div class="hero-badge-row">
+    <span class="hero-badge badge-lms">Blackboard</span>
+    <span class="hero-badge badge-prof">Guia do Professor</span>
+  </div>
+  <h1>Minha Biblioteca<br><span>no seu curso</span></h1>
+  <p>Como verificar a integração, disponibilizar acesso e adicionar livros diretamente no conteúdo da sua disciplina.</p>
+</div>
+
+<div class="nav-row">
+  <a class="nav-btn active" href="#sec-verificar">1. Verificar configuração</a>
+  <a class="nav-btn" href="#sec-acesso">2. Formas de acesso</a>
+  <a class="nav-btn" href="#sec-conteudo">3. Adicionar via Conteúdo</a>
+  <a class="nav-btn" href="#sec-duvidas">Dúvidas</a>
+</div>
+
+
+<!-- SEÇÃO 1 -->
+<div class="section-anchor" id="sec-verificar">
+<div class="card">
+  <div class="section-header">
+    <div class="ico">🔍</div>
+    <div class="info"><h2>1. Verificar a configuração na disciplina</h2><p>Antes de usar, confirme se a MB está disponível no seu curso</p></div>
+  </div>
+
+  <p>A Minha Biblioteca é registrada no Blackboard pelo administrador da instituição. Uma vez que o <strong>Placement</strong> da MB estiver ativo e disponível para o seu curso, você poderá adicioná-la ao conteúdo da disciplina.</p>
+
+  <h3>Como verificar se a MB está disponível</h3>
+  <p>Tente adicionar um conteúdo no curso usando a Minha Biblioteca (veja a Seção 3). Se ela aparecer na lista de ferramentas disponíveis, está tudo pronto. Caso não apareça, entre em contato com o administrador do Blackboard da instituição.</p>
+
+  <div class="alert alert-info">
+    <span class="ico">💡</span>
+    <div><strong>O acesso depende do administrador:</strong> No Blackboard, a disponibilidade da ferramenta por curso é controlada pelo admin via Placements. Se a MB não aparecer como opção ao adicionar conteúdo, solicite ao seu suporte técnico que habilite o Placement para o seu curso.</div>
+  </div>
+</div>
+</div>
+
+
+<!-- SEÇÃO 2 -->
+<div class="section-anchor" id="sec-acesso">
+<div class="card">
+  <div class="section-header">
+    <div class="ico">📂</div>
+    <div class="info"><h2>2. Formas de disponibilizar a Minha Biblioteca</h2><p>Escolha a abordagem que melhor se encaixa na sua disciplina</p></div>
+  </div>
+
+  <div class="option-grid">
+    <div class="option-card option-card--a">
+      <div class="option-card__label">Opção A</div>
+      <h3>Link genérico no conteúdo</h3>
+      <p>Adicione a MB como ferramenta no conteúdo da disciplina. O aluno clica e acessa a <strong>home da Minha Biblioteca</strong>, onde pode buscar qualquer livro do acervo.</p>
+    </div>
+    <div class="option-card option-card--b">
+      <div class="option-card__label">Opção B</div>
+      <h3>Link direto para livro/página</h3>
+      <p>Ao adicionar a MB, uma <strong>interface de seleção abre automaticamente</strong>. Você escolhe o livro ou página — e o aluno vai direto ao conteúdo.</p>
+      <span class="tag-rec">Recomendado para leituras dirigidas</span>
+    </div>
+  </div>
+
+  <table>
+    <thead><tr><th>Característica</th><th>Acesso geral (A)</th><th>Link direcionado (B)</th></tr></thead>
+    <tbody>
+      <tr><td>O que o aluno vê ao clicar</td><td>Home da MB — busca livre</td><td>O livro ou página exata configurada</td></tr>
+      <tr><td>Ideal para</td><td>Acesso geral ao acervo</td><td>Leituras obrigatórias por semana/tema</td></tr>
+    </tbody>
+  </table>
+</div>
+</div>
+
+
+<!-- SEÇÃO 3 -->
+<div class="section-anchor" id="sec-conteudo">
+<div class="card">
+  <div class="section-header">
+    <div class="ico">📚</div>
+    <div class="info"><h2>3. Adicionar livros via Conteúdo (Deep Linking)</h2><p>Vincule conteúdos específicos diretamente no plano da disciplina</p></div>
+  </div>
+
+  <p>Ao adicionar a Minha Biblioteca como ferramenta no conteúdo do Blackboard, a plataforma abre automaticamente uma <strong>interface de seleção de conteúdo</strong> (Deep Linking). Você seleciona os livros ou páginas desejados — cada seleção se torna um item de conteúdo independente no curso.</p>
+
+  <div class="alert alert-info">
+    <span class="ico">💡</span>
+    <div><strong>Blackboard Ultra vs. Original:</strong> O caminho para adicionar a ferramenta varia entre as versões. Os dois fluxos estão descritos abaixo — identifique qual versão sua instituição utiliza.</div>
+  </div>
+
+  <div class="version-tabs">
+    <div class="version-tab">
+      <div class="version-tab__label">Blackboard Ultra</div>
+      <h4>Como adicionar</h4>
+      <p>No conteúdo do curso: clique em <strong>"+"</strong> → <strong>"Content Market"</strong> ou <strong>"External App"</strong> → localize <strong>Minha Biblioteca</strong> → a interface de seleção abre.</p>
+    </div>
+    <div class="version-tab">
+      <div class="version-tab__label">Blackboard Original</div>
+      <h4>Como adicionar</h4>
+      <p>Na seção de conteúdo: <strong>Build Content</strong> → <strong>External Tool</strong> → selecione <strong>Minha Biblioteca</strong> → a interface de seleção abre.</p>
+    </div>
+  </div>
+
+  <h3>O que acontece após selecionar a Minha Biblioteca</h3>
+
+  <div class="dl-flow">
+    <div class="dl-step">
+      <div class="dl-num">1</div>
+      <div class="dl-body">
+        <h4>Selecione a Minha Biblioteca como ferramenta</h4>
+        <p>Siga o caminho correspondente à versão do seu Blackboard (Ultra ou Original) para localizar e selecionar <strong>Minha Biblioteca</strong>.</p>
+      </div>
+    </div>
+    <div class="dl-step">
+      <div class="dl-num">2</div>
+      <div class="dl-body">
+        <h4>Interface de seleção da MB abre automaticamente</h4>
+        <p>Uma janela da <strong>Minha Biblioteca</strong> abre dentro do Blackboard — é a interface de Deep Linking. Aqui você busca e seleciona os conteúdos desejados.</p>
+      </div>
+    </div>
+    <div class="dl-step">
+      <div class="dl-num">3</div>
+      <div class="dl-body">
+        <h4>Selecione livros ou colete URLs de páginas específicas</h4>
+        <p>Você pode <strong>selecionar livros diretamente</strong> pelo picker ou <strong>copiar URLs</strong> de páginas específicas disponibilizadas pela interface — para enviar o aluno direto ao capítulo ou página exata.</p>
+      </div>
+    </div>
+    <div class="dl-step">
+      <div class="dl-num">4</div>
+      <div class="dl-body">
+        <h4>Cada seleção vira um item de conteúdo independente</h4>
+        <p>Cada livro ou página confirmado é adicionado como um <strong>item separado no conteúdo do curso</strong>. Você pode renomeá-lo para facilitar a identificação pelo aluno.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="result-box">
+    <span class="ico">✅</span>
+    <p>Ao final, seus alunos verão cada livro como um item nomeado no conteúdo do curso. Ao clicar, são redirecionados diretamente para aquela leitura na Minha Biblioteca — com autenticação automática.</p>
+  </div>
+
+  <div class="alert alert-warn">
+    <span class="ico">⚠️</span>
+    <div><strong>A interface de seleção não abriu?</strong> Se ao selecionar a Minha Biblioteca o Blackboard foi direto para a configuração do item sem abrir o picker, o Placement pode não estar configurado como "Deep Linking content tool". Entre em contato com o administrador da instituição.</div>
+  </div>
+</div>
+
+<div class="card">
+  <h2>Resultado para o aluno em cada cenário</h2>
+  <table>
+    <thead><tr><th>Como o professor configurou</th><th>O que o aluno vê ao clicar</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Ferramenta genérica (sem seleção)</strong></td><td>Home da Minha Biblioteca — busca livre no acervo</td></tr>
+      <tr><td><strong>Livro selecionado via picker</strong></td><td>O livro escolhido, aberto desde o início</td></tr>
+      <tr><td><strong>Página específica via URL do picker</strong></td><td>Aquela página exata do livro, pronta para leitura</td></tr>
+    </tbody>
+  </table>
+</div>
+</div>
+
+
+<!-- SEÇÃO 4 -->
+<div class="section-anchor" id="sec-duvidas">
+<div class="card">
+  <div class="section-header">
+    <div class="ico">❓</div>
+    <div class="info"><h2>Dúvidas frequentes</h2><p>Situações comuns e como resolver</p></div>
+  </div>
+
+  <h3>A Minha Biblioteca não aparece ao adicionar conteúdo</h3>
+  <p>O Placement da MB precisa estar ativo e disponível para o seu curso. Entre em contato com o administrador do Blackboard para verificar se o Placement foi criado e habilitado corretamente.</p>
+
+  <h3>O aluno clicou e deu erro de acesso</h3>
+  <p>Verifique se o aluno está cadastrado no Blackboard com <strong>e-mail completo e válido</strong> e com <strong>nome e sobrenome</strong> preenchidos. Dados incompletos causam falha de autenticação na MB.</p>
+
+  <h3>A interface de seleção não abre</h3>
+  <p>O Deep Linking depende do tipo de Placement configurado pelo administrador. Se a janela de seleção não abrir, o Placement pode estar com tipo incorreto. Solicite ao suporte técnico da instituição que verifique a configuração.</p>
+
+  <h3>O aluno não tem acesso ao livro indicado</h3>
+  <p>O acesso ao conteúdo depende do contrato da instituição com a Minha Biblioteca. Se o aluno abre a MB mas não vê o livro, entre em contato com o suporte da MB para verificar o acervo contratado.</p>
+</div>
+</div>
+
+<div class="support-card">
+  <h2>Precisa de ajuda?</h2>
+  <p>Para dúvidas técnicas sobre a integração, entre em contato com o suporte da sua instituição ou da Minha Biblioteca.<br>Para dúvidas sobre o acervo, acesse o suporte em <strong>minhabiblioteca.com.br</strong>.</p>
+</div>
+
+</div>
+<script>
+const sections=document.querySelectorAll('.section-anchor');
+const navBtns=document.querySelectorAll('.nav-btn');
+function updateNav(){let c='';sections.forEach(s=>{if(window.scrollY>=s.offsetTop-100)c=s.id});navBtns.forEach(b=>{b.classList.toggle('active',b.getAttribute('href').replace('#','')=== c)})}
+window.addEventListener('scroll',updateNav,{passive:true});
+</script>
+</body>
+</html>

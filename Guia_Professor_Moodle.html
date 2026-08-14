@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guia do Professor — Minha Biblioteca no Moodle</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --navy:#0A2342;--blue:#007DB7;--blue-bg:rgba(0,125,183,.06);--blue-border:rgba(0,125,183,.15);
+  --green:#AECA0C;--green-bg:rgba(174,202,12,.1);--green-border:rgba(174,202,12,.3);
+  --white:#fff;--light:#F3F5F9;--gray:#E5E8ED;
+  --text:#1E2325;--text-mid:#4A5568;--text-light:#6B7780;
+  --warn:#E6930A;--warn-bg:#FEF8EC;--warn-border:#FCECC5;
+  --success:#16A34A;--success-bg:#EEFBF3;--success-border:#C6F0D4;
+  --lms:#f98012;--lms-bg:rgba(249,128,18,.06);--lms-border:rgba(249,128,18,.2);
+  --radius:12px;--font:'Montserrat',sans-serif;
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--font);background:var(--light);color:var(--text);line-height:1.75;-webkit-font-smoothing:antialiased}
+.page{max-width:1200px;margin:0 auto;padding:0 40px 100px}
+.hero{background:var(--navy);color:#fff;text-align:center;padding:52px 24px 44px;margin:0 -24px 0;position:relative;overflow:hidden}
+.hero::after{content:'';position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:60px;height:3px;background:var(--green);border-radius:3px}
+.hero-logo{height:34px;margin-bottom:20px}
+.hero-badge-row{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:18px}
+.hero-badge{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:5px 14px;border-radius:30px}
+.badge-lms{background:rgba(249,128,18,.2);color:#ffa94d}
+.badge-prof{background:rgba(174,202,12,.15);color:var(--green)}
+.hero h1{font-size:2rem;font-weight:800;letter-spacing:-.03em;margin-bottom:10px;line-height:1.2}
+.hero h1 span{color:var(--green)}
+.hero p{font-size:.95rem;color:rgba(255,255,255,.7);max-width:480px;margin:0 auto}
+.nav-row{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;padding:24px 0 28px;position:sticky;top:0;z-index:100;background:var(--light)}
+.nav-btn{display:flex;align-items:center;gap:7px;padding:9px 18px;border-radius:30px;border:1.5px solid var(--gray);background:var(--white);color:var(--text-light);font-family:var(--font);font-size:13px;font-weight:600;cursor:pointer;transition:all .2s;text-decoration:none}
+.nav-btn:hover{border-color:var(--blue);color:var(--blue)}
+.nav-btn.active{background:var(--lms);color:#fff;border-color:var(--lms)}
+.card{background:var(--white);border:1px solid var(--gray);border-radius:var(--radius);padding:28px 32px;margin-bottom:20px;box-shadow:0 2px 8px rgba(10,35,66,.04)}
+.card h2{font-size:1.15rem;font-weight:700;margin-bottom:12px;color:var(--navy)}
+.card h3{font-size:1rem;font-weight:700;margin:22px 0 10px;color:var(--navy)}
+.card p{color:var(--text);margin-bottom:12px;font-size:15px}
+.section-header{display:flex;align-items:center;gap:16px;padding:20px 24px;background:var(--navy);border-radius:var(--radius) var(--radius) 0 0;margin:-28px -32px 24px;border-bottom:3px solid var(--green)}
+.section-header .ico{font-size:2rem}
+.section-header .info h2{margin:0;font-size:1.2rem;color:#fff;font-weight:700}
+.section-header .info p{margin:0;font-size:12px;color:rgba(255,255,255,.55)}
+.steps{counter-reset:step;list-style:none;margin:12px 0 16px;padding:0}
+.steps li{counter-increment:step;display:flex;gap:14px;align-items:flex-start;padding:10px 14px;border-radius:8px;margin-bottom:3px;font-size:14px;transition:background .15s}
+.steps li:hover{background:var(--light)}
+.steps li::before{content:counter(step);width:26px;height:26px;border-radius:50%;background:var(--blue-bg);color:var(--blue);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;flex-shrink:0;margin-top:2px}
+.option-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:20px 0}
+@media(max-width:640px){.option-grid{grid-template-columns:1fr}}
+.option-card{border-radius:var(--radius);padding:20px 22px;border:2px solid}
+.option-card--a{border-color:var(--blue-border);background:var(--blue-bg)}
+.option-card--b{border-color:var(--green-border);background:var(--green-bg)}
+.option-card__label{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px}
+.option-card--a .option-card__label{color:var(--blue)}
+.option-card--b .option-card__label{color:#5a7200}
+.option-card h3{margin:0 0 8px;font-size:1rem;color:var(--navy);font-weight:700}
+.option-card p{margin:0;font-size:13px;color:var(--text-mid);line-height:1.6}
+.option-card .tag-rec{display:inline-block;background:#dcfce7;color:#166534;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;margin-top:6px;letter-spacing:.04em;text-transform:uppercase}
+.dl-flow{display:flex;flex-direction:column;gap:0;margin:20px 0 8px;position:relative}
+.dl-step{display:flex;gap:14px;padding:14px 0;position:relative}
+.dl-step::before{content:'';position:absolute;left:15px;top:38px;bottom:0;width:2px;background:var(--green-border)}
+.dl-step:last-child::before{display:none}
+.dl-num{width:32px;height:32px;border-radius:50%;background:var(--green);color:var(--navy);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.8rem;flex-shrink:0;z-index:1}
+.dl-body h4{margin:0 0 3px;font-size:14px;font-weight:700;color:var(--navy)}
+.dl-body p{margin:0;font-size:13px;line-height:1.6;color:var(--text-mid)}
+.alert{border-radius:var(--radius);padding:14px 18px;margin:14px 0;display:flex;gap:10px;align-items:flex-start;font-size:14px;line-height:1.6}
+.alert .ico{font-size:1rem;flex-shrink:0;margin-top:2px}
+.alert-info{background:var(--blue-bg);border:1px solid var(--blue-border)}
+.alert-info strong{color:var(--blue)}
+.alert-warn{background:var(--warn-bg);border:1px solid var(--warn-border)}
+.alert-warn strong{color:var(--warn)}
+.alert-success{background:var(--success-bg);border:1px solid var(--success-border)}
+.alert-success strong{color:var(--success)}
+.alert-tip{background:var(--green-bg);border:1px solid var(--green-border)}
+.alert-tip strong{color:#5a7200}
+.nav-path{display:inline-flex;align-items:center;gap:4px;background:#f1f5f9;border:1px solid var(--gray);border-radius:8px;padding:6px 12px;font-size:13px;font-weight:600;color:var(--navy);margin:8px 0 16px;flex-wrap:wrap}
+.nav-path span{color:var(--text-light);font-size:12px;font-weight:400;margin:0 2px}
+.nav-path em{font-style:normal;color:var(--lms)}
+.result-box{background:var(--navy);border-radius:var(--radius);padding:16px 20px;margin:16px 0;display:flex;gap:12px;align-items:flex-start}
+.result-box .ico{font-size:1.2rem;flex-shrink:0}
+.result-box p{margin:0;font-size:13px;color:rgba(255,255,255,.85);line-height:1.6}
+.result-box strong{color:#fff}
+table{width:100%;border-collapse:separate;border-spacing:0;margin:12px 0 16px;border-radius:var(--radius);overflow:hidden;border:1px solid var(--gray);font-size:14px}
+thead{background:var(--navy)}
+th{padding:10px 16px;text-align:left;font-weight:700;color:#fff;font-size:11px;letter-spacing:.05em;text-transform:uppercase}
+td{padding:9px 16px;border-bottom:1px solid var(--light);color:var(--text)}
+tr:last-child td{border-bottom:none}
+tbody tr:hover{background:var(--light)}
+.support-card{background:var(--navy);color:#fff;border-radius:var(--radius);padding:36px;margin-top:32px;text-align:center}
+.support-card h2{color:#fff;margin-bottom:6px;font-size:1.15rem}
+.support-card p{color:rgba(255,255,255,.7);font-size:13px;margin-bottom:0}
+.section-anchor{scroll-margin-top:72px}
+.split-divider{display:flex;align-items:center;gap:16px;margin:28px 0 20px}
+.split-divider::before,.split-divider::after{content:'';flex:1;height:1px;background:var(--gray)}
+.split-divider span{font-size:12px;font-weight:700;color:var(--text-light);text-transform:uppercase;letter-spacing:.06em;white-space:nowrap}
+.sub-section-header{display:flex;align-items:center;gap:12px;padding:14px 18px;border-radius:10px;margin:-28px -32px 20px;border-bottom:2px solid}
+.sub-section-a{background:var(--blue-bg);border-color:var(--blue-border)}
+.sub-section-b{background:var(--green-bg);border-color:var(--green-border)}
+.sub-section-a .sub-label{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--blue)}
+.sub-section-b .sub-label{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#5a7200}
+.sub-section-header h3{margin:0;font-size:1rem;font-weight:700;color:var(--navy)}
+.screenshot-ph{display:flex;align-items:center;gap:10px;background:var(--light);border:2px dashed var(--gray);border-radius:var(--radius);padding:14px 20px;margin:12px 0;color:var(--text-light);font-size:13px;font-style:italic}
+.screenshot-ph::before{content:'📸';font-size:1.4rem;font-style:normal}
+.guide-img{width:100%;margin-top:10px;margin-bottom:4px;border-radius:10px;border:1px solid var(--gray);display:block}
+.guide-img-sm{max-width:380px}
+@media(max-width:640px){.hero h1{font-size:1.65rem}.card{padding:20px 18px}}
+@media print{
+  .nav-row{display:none}
+  .hero{padding:28px 20px 24px;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .page{padding:0 12px 0}
+  .card{break-inside:avoid;box-shadow:none;border:1px solid #ddd;margin-bottom:14px}
+  .alert,.result-box,.option-card,.dl-step{break-inside:avoid}
+  table{break-inside:avoid}
+  .section-header,.sub-section-header{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .support-card{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .screenshot-ph{display:none}
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+<div class="hero">
+  <a href="index.html" style="display:inline-flex;align-items:center;gap:5px;color:rgba(255,255,255,.6);font-size:12px;font-weight:600;text-decoration:none;margin-bottom:16px" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,.6)'">← Voltar ao Hub</a><br>
+  <img src="./imgs/mb-new.png.webp" alt="Minha Biblioteca" class="hero-logo">
+  <div class="hero-badge-row">
+    <span class="hero-badge badge-lms">Moodle</span>
+    <span class="hero-badge badge-prof">Guia do Professor</span>
+  </div>
+  <h1>Minha Biblioteca<br><span>no seu curso</span></h1>
+  <p>Como verificar a integração, disponibilizar o catálogo e adicionar conteúdos específicos diretamente nas seções da sua disciplina.</p>
+</div>
+
+<div class="nav-row">
+  <a class="nav-btn active" href="#sec-adicionar">1. Adicionar ao curso</a>
+  <a class="nav-btn" href="#sec-duvidas">Dúvidas</a>
+</div>
+
+
+<!-- SEÇÃO 1 (era 2) -->
+<div class="section-anchor" id="sec-adicionar">
+
+<div class="card">
+  <div class="section-header">
+    <div class="ico">➕</div>
+    <div class="info"><h2>1. Adicionar a Minha Biblioteca ao curso</h2><p>Siga o fluxo comum e escolha como disponibilizar o acervo</p></div>
+  </div>
+
+  <p>Independente do tipo de acesso que deseja configurar, o início do processo é sempre o mesmo:</p>
+
+  <div class="nav-path">
+    Disciplina <span>→</span> <em>Ativar edição</em> <span>→</span> seção desejada <span>→</span> <em>+</em> <span>→</span> <em>Adicionar atividade ou recurso</em> <span>→</span> <em>Minha Biblioteca</em> <span>→</span> <em>Adicionar</em>
+  </div>
+
+  <div class="dl-flow">
+    <div class="dl-step">
+      <div class="dl-num">1</div>
+      <div class="dl-body">
+        <h4>Ative o modo de edição da disciplina</h4>
+        <p>No canto superior direito do curso, clique em <strong>"Ativar edição"</strong> (ou no botão de lápis/engrenagem). A interface muda e exibe opções de edição em cada seção.</p>
+        <img src="imgs/moodle_habilitar_edicao.png" alt="Botão Ativar edição no canto superior direito do curso" class="guide-img">
+      </div>
+    </div>
+    <div class="dl-step">
+      <div class="dl-num">2</div>
+      <div class="dl-body">
+        <h4>Escolha a seção e clique em "+"</h4>
+        <p>Navegue até a seção onde o item da MB deve aparecer. Clique no botão <strong>"+"</strong> (ou <strong>"Adicionar uma atividade ou recurso"</strong>) que aparece no rodapé da seção.</p>
+        <img src="imgs/moodle_criar_atv_recurso.png" alt="Botão + para adicionar atividade ou recurso na seção do curso" class="guide-img">
+      </div>
+    </div>
+    <div class="dl-step">
+      <div class="dl-num">3</div>
+      <div class="dl-body">
+        <h4>Localize e selecione a Minha Biblioteca</h4>
+        <p>Na lista de atividades e recursos, encontre o item <strong>"Minha Biblioteca"</strong> (o nome exato é definido pelo administrador ao instalar o LTI). Clique nele para selecioná-lo.</p>
+        <img src="imgs/moodle_selecionar_lti_mb.png" alt="Minha Biblioteca selecionada no chooser de atividades" class="guide-img">
+      </div>
+    </div>
+    <div class="dl-step">
+      <div class="dl-num">4</div>
+      <div class="dl-body">
+        <h4>Clique em "Adicionar"</h4>
+        <p>Com a Minha Biblioteca selecionada, clique em <strong>"Adicionar"</strong>. A página de configuração da atividade abrirá.</p>
+        <img src="imgs/moodle_adicionar_atv_recurso.png" alt="Botão Adicionar com Minha Biblioteca selecionada" class="guide-img">
+      </div>
+    </div>
+  </div>
+
+  <div class="split-divider"><span>A partir daqui, escolha como deseja disponibilizar o acervo</span></div>
+
+  <div class="option-grid">
+    <div class="option-card option-card--a">
+      <div class="option-card__label">Opção A</div>
+      <h3>Acesso ao catálogo</h3>
+      <p>O aluno clica e acessa a <strong>home da Minha Biblioteca</strong> — busca livre em todo o acervo contratado. Basta dar nome ao item e salvar.</p>
+    </div>
+    <div class="option-card option-card--b">
+      <div class="option-card__label">Opção B</div>
+      <h3>Conteúdo específico (Deep Link)</h3>
+      <p>Você seleciona um livro ou página dentro do Moodle. O aluno clica e vai direto ao conteúdo — sem passar pela busca.</p>
+      <span class="tag-rec">Recomendado para leituras dirigidas</span>
+    </div>
+  </div>
+</div>
+
+
+<!-- Opção A -->
+<div class="card">
+  <div class="sub-section-header sub-section-a">
+    <div>
+      <div class="sub-label">Opção A</div>
+      <h3>Acesso ao catálogo — configuração</h3>
+    </div>
+  </div>
+
+  <p>Na página de configuração da atividade, preencha os campos básicos e salve. O aluno acessará a home da MB.</p>
+
+  <ol class="steps">
+    <li>Preencha o <strong>Nome da atividade</strong> (obrigatório — é o texto que aparece para o aluno na seção do curso)</li>
+    <li>Adicione uma <strong>Descrição</strong> se quiser dar contexto ao aluno (opcional)</li>
+  </ol>
+
+  <img src="imgs/moodle_config_nome_item.png" alt="Campos Nome e Descrição na página de configuração da atividade Moodle" class="guide-img">
+
+  <h3>Sem restrições de acesso</h3>
+  <p>Clique em <strong>"Salvar e retornar ao curso"</strong>. O item aparecerá imediatamente na seção selecionada, acessível para todos os alunos matriculados.</p>
+
+  <img src="imgs/moodle_catalogo_salvar_mostrar.png" alt="Opções de salvar e mostrar na configuração da atividade" class="guide-img">
+
+  <h3>Com restrições de acesso</h3>
+  <p>O Moodle permite restringir o acesso por data, grupo, nota mínima, conclusão de outra atividade, entre outros. Para configurar:</p>
+
+  <ol class="steps">
+    <li>Na mesma página de configuração, role até a seção <strong>"Restrições de acesso"</strong> e expanda-a</li>
+    <li>Clique em <strong>"Adicionar restrição"</strong> e configure conforme necessário</li>
+    <li>Clique em <strong>"Salvar e retornar ao curso"</strong></li>
+  </ol>
+
+  <div class="alert alert-info">
+    <span class="ico">💡</span>
+    <div><strong>Restrições de acesso</strong> são uma funcionalidade padrão do Moodle — as opções disponíveis dependem da configuração da sua instituição. Para dúvidas específicas sobre restrições, consulte o suporte da sua instituição.</div>
+  </div>
+
+  <div class="result-box">
+    <span class="ico">✅</span>
+    <p>Ao clicar no item, o aluno é redirecionado para a <strong>home da Minha Biblioteca</strong>, onde pode buscar qualquer livro disponível no acervo contratado — com autenticação automática.</p>
+  </div>
+
+  <img src="imgs/moodle_catalogo_inserido_disciplina.png" alt="Item da Minha Biblioteca inserido na seção da disciplina" class="guide-img">
+  <img src="imgs/moodle_catalogo_clicou_catalogo.png" alt="Visão do aluno ao clicar no item — home da Minha Biblioteca" class="guide-img">
+</div>
+
+
+<!-- Opção B -->
+<div class="card">
+  <div class="sub-section-header sub-section-b">
+    <div>
+      <div class="sub-label">Opção B</div>
+      <h3>Conteúdo específico via Deep Link — configuração</h3>
+    </div>
+  </div>
+
+  <p>Na página de configuração da atividade, você vai selecionar o conteúdo desejado através da interface da Minha Biblioteca.</p>
+
+  <ol class="steps">
+    <li>Na página de configuração, localize a seção <strong>"Conteúdo"</strong></li>
+    <li>Clique em <strong>"Selecionar conteúdo"</strong></li>
+  </ol>
+
+  <img src="imgs/moodle_deep_link_config.png" alt="Seção Conteúdo com botão Selecionar conteúdo em destaque" class="guide-img">
+
+  <ol class="steps" start="3">
+    <li>A interface de seleção da <strong>Minha Biblioteca</strong> abre dentro do Moodle — busque por título, autor ou assunto</li>
+  </ol>
+
+  <img src="imgs/moodle_deep_link_buscar_livro_capitulo.png" alt="Interface de seleção da Minha Biblioteca aberta dentro do Moodle com campo de busca" class="guide-img">
+
+  <ol class="steps" start="4">
+    <li>Para cada resultado, escolha <strong>"Selecionar livro"</strong> (abre do início) ou <strong>"Selecionar página"</strong> (para apontar a um capítulo específico)</li>
+  </ol>
+
+  <img src="imgs/moodle_deep_link_possibilidade_escolhas.png" alt="Opções de seleção: Selecionar livro ou Selecionar página" class="guide-img">
+
+  <ol class="steps" start="5">
+    <li>Confirme a seleção na interface da MB</li>
+  </ol>
+
+  <img src="imgs/moodle_deep_link_finalize_apos_escolhas.png" alt="Botão de finalizar seleção na interface da MB" class="guide-img">
+
+  <ol class="steps" start="6">
+    <li>O Moodle retorna à página de configuração com o conteúdo vinculado — edite o <strong>Nome da atividade</strong> se quiser algo mais descritivo (ex: <em>"Leitura — Cap. 3: Fundamentos"</em>)</li>
+    <li>Clique em <strong>"Salvar e retornar ao curso"</strong></li>
+  </ol>
+
+  <div class="alert alert-warn">
+    <span class="ico">⚠️</span>
+    <div><strong>Aviso sobre criação de itens:</strong> ao confirmar a seleção, o Moodle pode exibir um aviso informando que os itens serão criados na seção. Confirme para prosseguir.</div>
+  </div>
+
+  <img src="imgs/moodle_deep_link_aviso_criacao_itens.png" alt="Aviso do Moodle sobre criação de itens via Deep Link" class="guide-img">
+
+  <div class="alert alert-warn">
+    <span class="ico">⚠️</span>
+    <div><strong>O botão "Selecionar conteúdo" não aparece?</strong> Isso pode indicar que a ferramenta foi configurada sem suporte a Deep Linking pela administração. Entre em contato com o suporte da sua instituição para verificar.</div>
+  </div>
+
+  <div class="result-box">
+    <span class="ico">✅</span>
+    <p>Ao clicar no item, o aluno é redirecionado diretamente para o <strong>livro ou página exata</strong> que você selecionou — com autenticação automática, sem precisar buscar nada.</p>
+  </div>
+
+  <img src="imgs/moodle_deep_link_itens_criados_edite_para_alterar_nome.png" alt="Itens criados via Deep Link na seção do curso — dica de como editar o nome" class="guide-img">
+</div>
+
+
+<!-- Tabela resumo -->
+<div class="card">
+  <h2>Resumo: o que o aluno vê em cada opção</h2>
+  <table>
+    <thead><tr><th>Como o professor configurou</th><th>O que o aluno vê ao clicar</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Opção A — Catálogo (sem conteúdo selecionado)</strong></td><td>Home da Minha Biblioteca — busca livre no acervo</td></tr>
+      <tr><td><strong>Opção B — Livro selecionado via Deep Link</strong></td><td>O livro escolhido, aberto desde o início</td></tr>
+      <tr><td><strong>Opção B — Página específica via Deep Link</strong></td><td>Aquela página exata do livro, pronta para leitura</td></tr>
+    </tbody>
+  </table>
+</div>
+
+</div><!-- /sec-adicionar -->
+
+
+<!-- SEÇÃO 3 -->
+<div class="section-anchor" id="sec-duvidas">
+<div class="card">
+  <div class="section-header">
+    <div class="ico">❓</div>
+    <div class="info"><h2>Dúvidas frequentes</h2><p>Situações comuns e como resolver</p></div>
+  </div>
+
+  <h3>O botão "Selecionar conteúdo" não aparece na configuração</h3>
+  <p>O Deep Link pode não estar habilitado na configuração da ferramenta pelo administrador. Entre em contato com o suporte da sua instituição para verificar se o Deep Linking está ativo na instalação da Minha Biblioteca.</p>
+
+  <h3>O aluno clicou e deu erro de acesso</h3>
+  <p>Verifique se o aluno está cadastrado no Moodle com <strong>e-mail completo e válido</strong> e com <strong>nome e sobrenome</strong> preenchidos. Dados incompletos causam falha de autenticação na MB.</p>
+
+  <h3>Posso adicionar múltiplos itens de uma vez?</h3>
+  <p>No fluxo de Deep Link (Opção B), você pode selecionar múltiplos livros ou páginas dentro da mesma sessão de seleção — cada um se tornará uma atividade separada na seção do curso.</p>
+
+  <h3>O aluno não tem acesso ao livro indicado</h3>
+  <p>O acesso ao conteúdo depende do contrato da instituição com a Minha Biblioteca. Se o aluno abre a MB mas não vê o livro, entre em contato com o suporte da MB para verificar o acervo contratado.</p>
+
+  <h3>Posso restringir o acesso por data ou grupo?</h3>
+  <p>Sim. Tanto na Opção A quanto na Opção B, você pode configurar restrições de acesso padrão do Moodle (data, grupo, nota mínima, etc.) na seção <strong>"Restrições de acesso"</strong> da página de configuração da atividade.</p>
+</div>
+</div>
+
+<div class="support-card">
+  <h2>Precisa de ajuda?</h2>
+  <p>Para dúvidas técnicas sobre a integração, entre em contato com o suporte da sua instituição ou da Minha Biblioteca.<br>Para dúvidas sobre o acervo, acesse o suporte em <strong>minhabiblioteca.com.br</strong>.</p>
+</div>
+
+</div>
+<script>
+const sections=document.querySelectorAll('.section-anchor');
+const navBtns=document.querySelectorAll('.nav-btn');
+function updateNav(){let c='';sections.forEach(s=>{if(window.scrollY>=s.offsetTop-100)c=s.id});navBtns.forEach(b=>{b.classList.toggle('active',b.getAttribute('href').replace('#','')=== c)})}
+window.addEventListener('scroll',updateNav,{passive:true});
+</script>
+</body>
+</html>
