@@ -1,0 +1,21 @@
+name: Deploy
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: arc-runner-set
+    steps:
+      - uses: actions/checkout@v4
+      - uses: minha-biblioteca/.github/actions/deploy-static@main
+        with:
+          s3_bucket: mb-docs-publica
+          cloudfront_id: E3N7HQZR7N0TTQ
+          skip_build: 'true'
+          build_output: '.'
