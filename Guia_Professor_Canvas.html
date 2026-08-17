@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guia do Professor — Minha Biblioteca no Canvas</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --navy:#0A2342;--navy-mid:#16355B;
+  --blue:#007DB7;--blue-light:#3FABFD;--blue-bg:rgba(0,125,183,.06);--blue-border:rgba(0,125,183,.15);
+  --green:#AECA0C;--green-bg:rgba(174,202,12,.1);--green-border:rgba(174,202,12,.3);
+  --white:#fff;--light:#F3F5F9;--gray:#E5E8ED;
+  --text:#1E2325;--text-mid:#4A5568;--text-light:#6B7780;
+  --warn:#E6930A;--warn-bg:#FEF8EC;--warn-border:#FCECC5;
+  --success:#16A34A;--success-bg:#EEFBF3;--success-border:#C6F0D4;
+  --danger:#DC2626;--danger-bg:#FEF2F2;--danger-border:#FECACA;
+  --canvas:#E24A3A;--canvas-bg:rgba(226,74,58,.06);--canvas-border:rgba(226,74,58,.2);
+  --radius:12px;--font:'Montserrat',sans-serif;
+}
+html{scroll-behavior:smooth}
+body{font-family:var(--font);background:var(--light);color:var(--text);line-height:1.75;-webkit-font-smoothing:antialiased}
+.page{max-width:1200px;margin:0 auto;padding:0 40px 100px}
+
+/* Hero */
+.hero{background:var(--navy);color:#fff;text-align:center;padding:52px 24px 44px;margin:0 -24px 0;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-60px;right:-60px;width:240px;height:240px;border-radius:50%;background:rgba(174,202,12,.06)}
+.hero::after{content:'';position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:60px;height:3px;background:var(--green);border-radius:3px}
+.hero-logo{height:34px;margin-bottom:20px;filter:brightness(1)}
+.hero-badge-row{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:18px}
+.hero-badge{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:5px 14px;border-radius:30px}
+.badge-canvas{background:rgba(226,74,58,.18);color:#ff8a7a}
+.badge-prof{background:rgba(174,202,12,.15);color:var(--green)}
+.hero h1{font-size:2rem;font-weight:800;letter-spacing:-.03em;margin-bottom:10px;line-height:1.2}
+.hero h1 span{color:var(--green)}
+.hero p{font-size:.95rem;color:rgba(255,255,255,.7);max-width:480px;margin:0 auto}
+
+/* Nav */
+.nav-row{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;padding:24px 0 28px;position:sticky;top:0;z-index:100;background:var(--light)}
+.nav-btn{display:flex;align-items:center;gap:7px;padding:9px 18px;border-radius:30px;border:1.5px solid var(--gray);background:var(--white);color:var(--text-light);font-family:var(--font);font-size:13px;font-weight:600;cursor:pointer;transition:all .2s;text-decoration:none}
+.nav-btn:hover{border-color:var(--blue);color:var(--blue)}
+.nav-btn.active{background:var(--blue);color:#fff;border-color:var(--blue)}
+
+/* Cards */
+.card{background:var(--white);border:1px solid var(--gray);border-radius:var(--radius);padding:28px 32px;margin-bottom:20px;box-shadow:0 2px 8px rgba(10,35,66,.04)}
+.card h2{font-size:1.15rem;font-weight:700;margin-bottom:12px;color:var(--navy)}
+.card h3{font-size:1rem;font-weight:700;margin:22px 0 10px;color:var(--navy)}
+.card p{color:var(--text);margin-bottom:12px;font-size:15px}
+
+/* Section header */
+.section-header{display:flex;align-items:center;gap:16px;padding:20px 24px;background:var(--navy);border-radius:var(--radius) var(--radius) 0 0;margin:-28px -32px 24px;border-bottom:3px solid var(--green)}
+.section-header .ico{font-size:2rem}
+.section-header .info h2{margin:0;font-size:1.2rem;color:#fff;font-weight:700}
+.section-header .info p{margin:0;font-size:12px;color:rgba(255,255,255,.55)}
+
+/* Steps */
+.steps{counter-reset:step;list-style:none;margin:12px 0 16px;padding:0}
+.steps li{counter-increment:step;display:flex;gap:14px;align-items:flex-start;padding:10px 14px;border-radius:8px;margin-bottom:3px;font-size:14px;transition:background .15s}
+.steps li:hover{background:var(--light)}
+.steps li::before{content:counter(step);width:26px;height:26px;border-radius:50%;background:var(--blue-bg);color:var(--blue);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;flex-shrink:0;margin-top:2px}
+
+/* Option cards */
+.option-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:20px 0}
+@media(max-width:640px){.option-grid{grid-template-columns:1fr}}
+.option-card{border-radius:var(--radius);padding:20px 22px;border:2px solid}
+.option-card--a{border-color:var(--blue-border);background:var(--blue-bg)}
+.option-card--b{border-color:var(--green-border);background:var(--green-bg)}
+.option-card__label{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px}
+.option-card--a .option-card__label{color:var(--blue)}
+.option-card--b .option-card__label{color:#5a7200}
+.option-card h3{margin:0 0 8px;font-size:1rem;color:var(--navy);font-weight:700}
+.option-card p{margin:0;font-size:13px;color:var(--text-mid);line-height:1.6}
+.option-card .tag-rec{display:inline-block;background:#dcfce7;color:#166534;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;margin-top:6px;letter-spacing:.04em;text-transform:uppercase}
+
+/* Deep link flow */
+.dl-flow{display:flex;flex-direction:column;gap:0;margin:20px 0 8px;position:relative}
+.dl-step{display:flex;gap:14px;padding:14px 0;position:relative}
+.dl-step::before{content:'';position:absolute;left:15px;top:38px;bottom:0;width:2px;background:var(--green-border)}
+.dl-step:last-child::before{display:none}
+.dl-num{width:32px;height:32px;border-radius:50%;background:var(--green);color:var(--navy);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.8rem;flex-shrink:0;z-index:1}
+.dl-body h4{margin:0 0 3px;font-size:14px;font-weight:700;color:var(--navy)}
+.dl-body p{margin:0;font-size:13px;line-height:1.6;color:var(--text-mid)}
+.dl-body code{font-size:11px;background:var(--blue-bg);padding:1px 5px;border-radius:4px;color:var(--blue);font-family:monospace}
+.dl-img{width:100%;margin-top:12px;border-radius:8px;border:1px solid var(--gray);display:block}
+.dl-img+.dl-img{margin-top:8px}
+.dl-or{text-align:center;font-size:11px;font-weight:700;color:var(--text-light);letter-spacing:.1em;padding:14px 0;position:relative}
+.dl-or::before,.dl-or::after{content:'';position:absolute;top:50%;width:42%;height:1px;background:var(--gray)}
+.dl-or::before{left:0}.dl-or::after{right:0}
+.dl-sub{margin:10px 0 4px;padding:14px 16px;border-radius:8px}
+.dl-sub--a{background:var(--blue-bg);border:1px solid var(--blue-border)}
+.dl-sub--b{background:var(--green-bg);border:1px solid var(--green-border)}
+.dl-sub__label{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:6px}
+.dl-sub--a .dl-sub__label{color:var(--blue)}
+.dl-sub--b .dl-sub__label{color:#5a7200}
+.dl-sub h5{margin:0 0 4px;font-size:.9rem;color:var(--navy);font-weight:700}
+.dl-sub p{margin:0;font-size:13px;color:var(--text-mid);line-height:1.6}
+.dl-sub-steps{list-style:none;margin:12px 0 0;padding:0;counter-reset:sub;display:flex;flex-direction:column;gap:14px}
+.dl-sub-steps li{counter-increment:sub;display:flex;gap:10px;font-size:13px;color:var(--text-mid);line-height:1.5}
+.dl-sub-steps li::before{content:counter(sub);min-width:20px;height:20px;border-radius:50%;background:rgba(0,0,0,.1);color:var(--navy);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:11px;flex-shrink:0;margin-top:2px}
+
+/* Alert */
+.alert{border-radius:var(--radius);padding:14px 18px;margin:14px 0;display:flex;gap:10px;align-items:flex-start;font-size:14px;line-height:1.6}
+.alert .ico{font-size:1rem;flex-shrink:0;margin-top:2px}
+.alert-info{background:var(--blue-bg);border:1px solid var(--blue-border)}
+.alert-info strong{color:var(--blue)}
+.alert-warn{background:var(--warn-bg);border:1px solid var(--warn-border)}
+.alert-warn strong{color:var(--warn)}
+.alert-success{background:var(--success-bg);border:1px solid var(--success-border)}
+.alert-success strong{color:var(--success)}
+.alert-tip{background:var(--green-bg);border:1px solid var(--green-border)}
+.alert-tip strong{color:#5a7200}
+
+/* Navigation path pill */
+.nav-path{display:inline-flex;align-items:center;gap:4px;background:#f1f5f9;border:1px solid var(--gray);border-radius:8px;padding:6px 12px;font-size:13px;font-weight:600;color:var(--navy);margin:8px 0 16px;flex-wrap:wrap}
+.nav-path span{color:var(--text-light);font-size:12px;font-weight:400;margin:0 2px}
+.nav-path em{font-style:normal;color:var(--blue)}
+
+/* Result box */
+.result-box{background:var(--navy);border-radius:var(--radius);padding:16px 20px;margin:16px 0;display:flex;gap:12px;align-items:flex-start}
+.result-box .ico{font-size:1.2rem;flex-shrink:0}
+.result-box p{margin:0;font-size:13px;color:rgba(255,255,255,.85);line-height:1.6}
+.result-box strong{color:#fff}
+
+/* Nav settings illustration */
+.nav-settings{background:var(--light);border:1px solid var(--gray);border-radius:var(--radius);padding:16px 20px;margin:16px 0;font-size:13px}
+.nav-settings__title{font-weight:700;color:var(--navy);margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.nav-row-item{display:flex;align-items:center;gap:10px;padding:7px 10px;border-radius:6px;margin-bottom:4px;background:var(--white);border:1px solid var(--gray)}
+.nav-row-item:last-child{margin-bottom:0}
+.drag-icon{color:var(--text-light);font-size:14px}
+.nav-label{flex:1;font-size:13px}
+.nav-tag{font-size:10px;font-weight:700;padding:2px 8px;border-radius:8px;text-transform:uppercase;letter-spacing:.04em}
+.tag-visible{background:var(--success-bg);color:var(--success);border:1px solid var(--success-border)}
+.tag-hidden{background:#f1f5f9;color:var(--text-light);border:1px solid var(--gray)}
+
+/* Sim link */
+.sim-link{display:inline-flex;align-items:center;gap:6px;margin:8px 0 14px;padding:6px 14px;border-radius:8px;background:var(--navy);color:#fff;font-size:12px;font-weight:700;text-decoration:none;transition:background .2s}
+.sim-link:hover{background:var(--blue)}
+
+/* Summary table */
+table{width:100%;border-collapse:separate;border-spacing:0;margin:12px 0 16px;border-radius:var(--radius);overflow:hidden;border:1px solid var(--gray);font-size:14px}
+thead{background:var(--navy)}
+th{padding:10px 16px;text-align:left;font-weight:700;color:#fff;font-size:11px;letter-spacing:.05em;text-transform:uppercase;border-bottom:1px solid var(--gray)}
+td{padding:9px 16px;border-bottom:1px solid var(--light);color:var(--text)}
+tr:last-child td{border-bottom:none}
+tbody tr:hover{background:var(--light)}
+td strong{color:var(--navy)}
+
+/* Support card */
+.support-card{background:var(--navy);color:#fff;border-radius:var(--radius);padding:36px;margin-top:32px;text-align:center}
+.support-card h2{color:#fff;margin-bottom:6px;font-size:1.15rem}
+.support-card p{color:rgba(255,255,255,.7);font-size:13px;margin-bottom:0}
+
+/* Screenshot illustration */
+.screen-flow{margin:24px 0 8px;display:flex;flex-direction:column;gap:14px}
+.screen-block{background:var(--white);border:1px solid var(--gray);border-radius:var(--radius);overflow:hidden}
+.screen-block__label{padding:10px 16px;background:var(--blue-bg);border-bottom:1px solid var(--blue-border);font-size:12px;font-weight:700;color:var(--blue);display:flex;align-items:center;gap:8px}
+.screen-block__img{width:100%;display:block}
+.screen-arrow{text-align:center;font-size:22px;color:var(--text-light);margin:-4px 0}
+
+/* Scroll anchor */
+.section-anchor{scroll-margin-top:72px}
+
+@media(max-width:640px){.hero h1{font-size:1.65rem}.card{padding:20px 18px}.hero{padding:40px 18px 36px}}
+@media print{
+  .nav-row,.sim-link{display:none}
+  .hero{padding:28px 20px 24px;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .page{padding:0 12px 0}
+  .card{break-inside:avoid;box-shadow:none;border:1px solid #ddd;margin-bottom:14px}
+  .alert,.result-box,.option-card,.dl-step{break-inside:avoid}
+  table{break-inside:avoid}
+  .section-header{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  body{font-size:13px}
+  .option-grid{grid-template-columns:1fr 1fr}
+  .support-card{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+</style>
+</head>
+<body>
+
+<div class="page">
+
+<!-- HERO -->
+<div class="hero">
+  <a href="index.html" style="display:inline-flex;align-items:center;gap:5px;color:rgba(255,255,255,.6);font-size:12px;font-weight:600;text-decoration:none;margin-bottom:16px" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,.6)'">← Voltar ao Hub</a>
+  <br>
+  <img src="./imgs/mb-new.png.webp" alt="Minha Biblioteca" class="hero-logo">
+  <div class="hero-badge-row">
+    <span class="hero-badge badge-canvas">Canvas LMS</span>
+    <span class="hero-badge badge-prof">Guia do Professor</span>
+  </div>
+  <h1>Minha Biblioteca<br><span>no seu curso</span></h1>
+  <p>Como verificar a integração, disponibilizar acesso e adicionar livros diretamente nos seus módulos.</p>
+</div>
+
+<!-- NAV -->
+<div class="nav-row">
+  <a class="nav-btn active" href="#sec-verificar">1. Verificar configuração</a>
+  <a class="nav-btn" href="#sec-acesso">2. Formas de acesso</a>
+  <a class="nav-btn" href="#sec-modulos">3. Adicionar via Módulos</a>
+  <a class="nav-btn" href="#sec-duvidas">Dúvidas</a>
+</div>
+
+
+<!-- ===== SEÇÃO 1: VERIFICAR ===== -->
+<div class="section-anchor" id="sec-verificar">
+
+<div class="card">
+  <div class="section-header">
+    <div class="ico">🔍</div>
+    <div class="info"><h2>1. Verificar a configuração na disciplina</h2><p>Antes de usar, confirme se a MB está ativa no seu curso</p></div>
+  </div>
+
+  <p>A Minha Biblioteca é habilitada no Canvas pelo administrador da instituição. Uma vez instalada, ela fica disponível nas disciplinas. Como professor, você controla se o item aparece — ou fica oculto — no menu do curso para os alunos.</p>
+
+  <h3>Como verificar e ajustar a visibilidade</h3>
+
+  <div class="nav-path">
+    Sua disciplina <span>→</span> <em>Configurações</em> (menu esquerdo) <span>→</span> aba <em>Navegação</em>
+  </div>
+
+  <ol class="steps">
+    <li>Dentro da sua disciplina, clique em <strong>Configurações</strong> no menu lateral esquerdo</li>
+    <li>Clique na aba <strong>Navegação</strong></li>
+    <li>A página exibe dois blocos: itens <strong>ativos</strong> (acima, visíveis ao aluno) e itens <strong>inativos</strong> (abaixo, ocultos)</li>
+    <li>Localize <strong>Minha Biblioteca</strong> — veja em qual bloco ela está</li>
+    <li>Arraste o item entre os blocos conforme sua necessidade</li>
+    <li>Clique em <strong>Salvar</strong> para confirmar</li>
+  </ol>
+
+  <div class="nav-settings">
+    <div class="nav-settings__title">📌 Como fica a aba Navegação</div>
+    <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--success);margin-bottom:6px;padding-left:4px">Links ativos — visíveis ao aluno</div>
+    <div class="nav-row-item">
+      <span class="drag-icon">⋮⋮</span>
+      <span class="nav-label">Minha Biblioteca</span>
+      <span class="nav-tag tag-visible">Ativo</span>
+    </div>
+    <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--text-light);margin:10px 0 6px;padding-left:4px">Links inativos — ocultos ao aluno</div>
+    <div class="nav-row-item" style="opacity:.6">
+      <span class="drag-icon">⋮⋮</span>
+      <span class="nav-label">Minha Biblioteca</span>
+      <span class="nav-tag tag-hidden">Inativo</span>
+    </div>
+  </div>
+
+  <div class="alert alert-info">
+    <span class="ico">💡</span>
+    <div><strong>Ativo ou inativo por padrão?</strong> Depende de como o administrador configurou a instalação — não há um padrão universal. Verifique na aba Navegação em qual bloco a MB aparece na sua disciplina e ajuste conforme necessário.</div>
+  </div>
+
+  <div class="alert alert-warn">
+    <span class="ico">⚠️</span>
+    <div><strong>MB não aparece nem na lista de Navegação?</strong> Significa que a integração ainda não foi instalada na conta da instituição. Entre em contato com o suporte técnico ou administrador do Canvas.</div>
+  </div>
+</div>
+
+</div><!-- /sec-verificar -->
+
+
+<!-- ===== SEÇÃO 2: FORMAS DE ACESSO ===== -->
+<div class="section-anchor" id="sec-acesso">
+
+<div class="card">
+  <div class="section-header">
+    <div class="ico">📂</div>
+    <div class="info"><h2>2. Formas de disponibilizar a Minha Biblioteca</h2><p>Escolha a abordagem que melhor se encaixa na sua disciplina</p></div>
+  </div>
+
+  <p>Há duas formas de dar acesso à Minha Biblioteca para os alunos. Você pode usar uma ou as duas ao mesmo tempo:</p>
+
+  <div class="option-grid">
+    <div class="option-card option-card--a">
+      <div class="option-card__label">Opção A</div>
+      <h3>Acesso pelo menu lateral</h3>
+      <p>A MB aparece automaticamente no menu da disciplina. O aluno clica no item e acessa a <strong>home da Minha Biblioteca</strong>, onde pode buscar qualquer livro ou material disponível.</p>
+    </div>
+    <div class="option-card option-card--b">
+      <div class="option-card__label">Opção B</div>
+      <h3>Link direto nos Módulos</h3>
+      <p>Você adiciona livros ou páginas específicas <strong>diretamente dentro de um módulo</strong>. O aluno clica e já abre exatamente no conteúdo indicado.</p>
+      <span class="tag-rec">Recomendado para conteúdo programático</span>
+    </div>
+  </div>
+
+  <div class="screen-flow">
+    <div class="screen-block">
+      <div class="screen-block__label">📌 Opção A — onde fica o item no menu lateral da disciplina</div>
+      <img src="imgs/canvas-menu-lateral.png" alt="Menu lateral do Canvas com item Minha Biblioteca" class="screen-block__img">
+    </div>
+    <div class="screen-arrow">↓ ao clicar, abre em nova aba:</div>
+    <div class="screen-block">
+      <div class="screen-block__label">🌐 O que o aluno vê ao acessar — home da Minha Biblioteca</div>
+      <img src="imgs/mb-home-canvas.png" alt="Home da Minha Biblioteca com busca de livros" class="screen-block__img">
+    </div>
+  </div>
+
+  <table>
+    <thead><tr><th>Característica</th><th>Menu lateral (A)</th><th>Módulos (B)</th></tr></thead>
+    <tbody>
+      <tr><td>Onde aparece</td><td>Menu lateral do curso</td><td>Dentro dos módulos da disciplina</td></tr>
+      <tr><td>O que o aluno vê ao clicar</td><td>Home da MB — busca livre</td><td>O livro ou página exata configurada</td></tr>
+      <tr><td>Configuração necessária</td><td>Nenhuma (visibilidade ativa)</td><td>Professor adiciona os itens</td></tr>
+      <tr><td>Ideal para</td><td>Acesso geral ao acervo</td><td>Leituras obrigatórias, bibliografias por semana</td></tr>
+    </tbody>
+  </table>
+
+  <div class="alert alert-tip">
+    <span class="ico">✨</span>
+    <div><strong>Dica de uso combinado:</strong> Deixe o menu lateral ativo para acesso livre e use os módulos para indicar leituras específicas por semana ou por unidade — assim o aluno sabe exatamente o que deve ler em cada momento do curso.</div>
+  </div>
+</div>
+
+</div><!-- /sec-acesso -->
+
+
+<!-- ===== SEÇÃO 3: MÓDULOS / DEEP LINKING ===== -->
+<div class="section-anchor" id="sec-modulos">
+
+<div class="card">
+  <div class="section-header">
+    <div class="ico">📚</div>
+    <div class="info"><h2>3. Adicionar livros nos Módulos (Deep Linking)</h2><p>Vincule conteúdos específicos diretamente no plano da disciplina</p></div>
+  </div>
+
+  <p>Dentro de cada módulo da disciplina, você pode adicionar a Minha Biblioteca como ferramenta externa. Ao fazer isso, o Canvas abre automaticamente uma <strong>interface de seleção de conteúdo</strong> (Deep Linking) — você escolhe os livros ou páginas e cada seleção vira um item independente no módulo.</p>
+
+  <h3>Passo a passo</h3>
+
+  <div class="nav-path">
+    Sua disciplina <span>→</span> <em>Módulos</em> <span>→</span> <em>+</em> (lado direito do módulo) <span>→</span> <em>Ferramenta externa</em> <span>→</span> selecionar <em>Minha Biblioteca</em>
+  </div>
+
+  <div class="dl-flow">
+    <div class="dl-step">
+      <div class="dl-num">1</div>
+      <div class="dl-body">
+        <h4>Acesse Módulos no menu lateral da disciplina</h4>
+        <p>Navegue até <strong>Módulos</strong> no menu da disciplina. Utilize um módulo já existente ou crie um novo. Note o botão <strong>"+"</strong> no canto direito do cabeçalho do módulo.</p>
+        <img src="imgs/canvas_criar_modulo.png" alt="Módulo no Canvas com botão + visível no canto direito" class="dl-img">
+      </div>
+    </div>
+    <div class="dl-step">
+      <div class="dl-num">2</div>
+      <div class="dl-body">
+        <h4>Clique no "+" e selecione "Ferramenta externa"</h4>
+        <p>Clique no <strong>"+"</strong> para abrir a tela de adição de itens. No campo <strong>"Adicionar"</strong>, abra o menu e escolha <strong>Ferramenta externa</strong>.</p>
+        <img src="imgs/canvas_adicionar_ferramenta_externa.png" alt="Dropdown aberto com Ferramenta externa em destaque" class="dl-img">
+      </div>
+    </div>
+    <div class="dl-step">
+      <div class="dl-num">3</div>
+      <div class="dl-body">
+        <h4>Escolha a Minha Biblioteca na lista de ferramentas</h4>
+        <p>A lista de ferramentas disponíveis aparece. Localize e clique na <strong>Minha Biblioteca</strong>. <em>O nome pode variar conforme a configuração da sua instituição.</em></p>
+        <img src="imgs/canvas_escolher_mb_ferramenta_externa.png" alt="Minha Biblioteca em destaque na lista de ferramentas externas" class="dl-img">
+      </div>
+    </div>
+    <div class="dl-step">
+      <div class="dl-num">4</div>
+      <div class="dl-body">
+        <h4>Interface de seleção da MB abre automaticamente</h4>
+        <p>Uma janela da <strong>Minha Biblioteca</strong> abre dentro do Canvas — é a interface de Deep Linking. Use a busca para encontrar o conteúdo desejado.</p>
+        <img src="imgs/canvas_mb_deep_link_selecao.png" alt="Interface de Deep Linking da Minha Biblioteca com campo de busca" class="dl-img">
+      </div>
+    </div>
+    <div class="dl-step">
+      <div class="dl-num">5</div>
+      <div class="dl-body">
+        <h4>Busque e escolha o livro ou página</h4>
+        <p>Pesquise pelo título, autor, assunto ou ISBN. Para cada resultado, escolha <strong>Selecionar livro</strong> (abre o livro do início) ou <strong>Selecionar página</strong> (abre em uma página específica).</p>
+        <img src="imgs/canvas_dl_escolher_livro_pagina.png" alt="Resultado de busca com botões Selecionar livro e Selecionar página" class="dl-img">
+      </div>
+    </div>
+    <div class="dl-step">
+      <div class="dl-num">6</div>
+      <div class="dl-body">
+        <h4>Escolha como vincular o conteúdo</h4>
+        <p>Para cada livro encontrado, escolha uma das opções abaixo:</p>
+
+        <div class="dl-sub dl-sub--a">
+          <div class="dl-sub__label">Opção A — Livro inteiro</div>
+          <h5>Clique em "Selecionar livro"</h5>
+          <p>O livro é adicionado diretamente à fila. Clique em <strong>Finalizar seleção</strong> para retornar ao Canvas.</p>
+          <img src="imgs/canvas_mb_escolher_livro.png" alt="Livro adicionado à fila de itens selecionados" class="dl-img">
+        </div>
+
+        <div class="dl-or">OU</div>
+
+        <div class="dl-sub dl-sub--b">
+          <div class="dl-sub__label">Opção B — Página específica</div>
+          <h5>Clique em "Selecionar página"</h5>
+          <p>A MB exibe as instruções e o botão para abrir o livro.</p>
+          <img src="imgs/canvas_selecionar_pagina_dl.png" alt="Tela Selecionar página com instruções e botão Abrir o livro" class="dl-img">
+          <ol class="dl-sub-steps">
+            <li><div>Clique em <strong>Abrir o livro</strong> e navegue até a página desejada. No sumário, clique em <strong>•••</strong> ao lado do título e selecione <strong>"Copiar URL da página"</strong>.<img src="imgs/canvas_copiar_url_dl.png" alt="Menu ··· do sumário com opção Copiar URL da página" class="dl-img"></div></li>
+            <li><div>Um modal exibe a URL da página. Clique em <strong>Copiar</strong>.<img src="imgs/canvas_copiar_url_pagina_confirmacao_dl.png" alt="Modal com a URL da página e botão Copiar" class="dl-img"></div></li>
+            <li><div>Volte à tela do Deep Link. Cole a URL no campo <strong>"URL do livro"</strong>, adicione uma <strong>Descrição</strong> (ex.: nome do capítulo) e clique em <strong>Adicionar seleção</strong>.<img src="imgs/canvas_descricao_url_adicionado.png" alt="Campos URL e Descrição preenchidos com botão Adicionar seleção" class="dl-img"></div></li>
+            <li><div>A página aparece em <strong>Itens selecionados</strong> com a descrição informada. Clique em <strong>Finalizar seleção</strong> para retornar ao Canvas.<img src="imgs/canvas_finalizar_selecao_dl.png" alt="Página selecionada com descrição e botão Finalizar seleção" class="dl-img"></div></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+    <div class="dl-step">
+      <div class="dl-num">7</div>
+      <div class="dl-body">
+        <h4>Confirme no Canvas — somente se adicionou um único item</h4>
+        <p>O Canvas retorna com a Minha Biblioteca selecionada e a URL preenchida automaticamente. Se você selecionou <strong>apenas um</strong> livro ou página, clique em <strong>Adicionar item</strong> para vincular ao módulo.</p>
+        <img src="imgs/canvas_adicionar_item.png" alt="URL preenchida e botão Adicionar item em destaque" class="dl-img">
+        <div class="alert alert-tip" style="margin-top:12px;margin-bottom:0">
+          <span class="ico">💡</span>
+          <div><strong>Adicionou mais de um item?</strong> Quando a seleção contém mais de um livro ou página, o Canvas vincula todos automaticamente ao finalizar — o botão "Adicionar item" não aparece e não é necessário.</div>
+        </div>
+      </div>
+    </div>
+    <div class="dl-step">
+      <div class="dl-num">8</div>
+      <div class="dl-body">
+        <h4>O item aparece vinculado no módulo</h4>
+        <p>Cada livro ou página confirmado é adicionado como um <strong>item independente no módulo</strong>. O aluno clica e acessa diretamente aquele conteúdo, sem precisar buscar.</p>
+        <img src="imgs/canvas_ligar_item_adicionado.png" alt="Item Física adicionado como link dentro do módulo" class="dl-img">
+        <div class="alert alert-warn" style="margin-top:12px;margin-bottom:0">
+          <span class="ico">⚠️</span>
+          <div><strong>Item não abre em nova aba?</strong> Quando mais de um item é adicionado de uma vez, o Canvas não marca a opção de nova aba automaticamente. Para corrigir, clique no ícone <strong>⚙</strong> ao lado do item no módulo, selecione <strong>Editar</strong> e marque a opção <strong>"Carregar em uma nova aba"</strong>.<img src="imgs/canvas_abrir_nova_aba.png" alt="Modal Editar detalhes do item com checkbox Carregar em uma nova aba" class="dl-img" style="max-width:320px;margin-top:10px"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="result-box">
+    <span class="ico">✅</span>
+    <p>Ao final, seus alunos verão, dentro do módulo, cada livro como um link nomeado. Ao clicar, são redirecionados diretamente para aquela leitura na Minha Biblioteca — com autenticação automática, sem precisar fazer login separado.</p>
+  </div>
+
+  <div class="screen-flow" style="margin-top:16px">
+    <div class="screen-block">
+      <div class="screen-block__label">👆 O que o aluno vê ao clicar no item do módulo</div>
+      <img src="imgs/canvas_dp_abrir_outro_navegador.png" alt="Canvas pedindo para carregar a ferramenta em nova janela" class="screen-block__img">
+    </div>
+    <div class="screen-arrow">↓ ao clicar em "Carregar em uma nova janela":</div>
+    <div class="screen-block">
+      <div class="screen-block__label">📖 O livro abre direto na Minha Biblioteca</div>
+      <img src="imgs/canvas_livro_aberto.png" alt="Livro aberto no leitor da Minha Biblioteca" class="screen-block__img">
+    </div>
+  </div>
+
+  <h3>Gerenciar múltiplos livros</h3>
+  <p>Você pode repetir o processo para adicionar quantos livros quiser ao mesmo módulo ou a módulos diferentes. Cada item pode ser renomeado no próprio Canvas para facilitar a identificação pelo aluno (ex.: <em>"Capítulo 3 — Fundamentos"</em>).</p>
+
+  <div class="alert alert-info">
+    <span class="ico">💡</span>
+    <div><strong>Renomear o item:</strong> Após adicionar, clique no ícone de engrenagem (⚙) ao lado do item no módulo e selecione <strong>Edit</strong> para alterar o nome exibido ao aluno.</div>
+  </div>
+
+  <div class="alert alert-warn">
+    <span class="ico">⚠️</span>
+    <div><strong>A interface de seleção não abriu?</strong> Se ao selecionar a Minha Biblioteca o Canvas foi direto para a tela de adicionar item (sem abrir o picker), clique em <strong>Find</strong> ou <strong>Select</strong> para iniciar o Deep Linking manualmente. Se ainda assim não abrir, entre em contato com o suporte da sua instituição.</div>
+  </div>
+</div>
+
+
+<!-- Card comparativo de resultado -->
+<div class="card">
+  <h2>Resultado para o aluno em cada cenário</h2>
+  <table>
+    <thead><tr><th>Como o professor configurou</th><th>O que o aluno vê ao clicar</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Acesso pelo menu lateral</strong></td><td>Home da Minha Biblioteca — busca livre em todo o acervo</td></tr>
+      <tr><td><strong>Item no módulo (livro inteiro)</strong></td><td>O livro escolhido, aberto desde o início</td></tr>
+      <tr><td><strong>Item no módulo (página específica)</strong></td><td>Aquela página exata do livro, pronta para leitura</td></tr>
+    </tbody>
+  </table>
+</div>
+
+</div><!-- /sec-modulos -->
+
+
+<!-- ===== SEÇÃO 4: DÚVIDAS ===== -->
+<div class="section-anchor" id="sec-duvidas">
+
+<div class="card">
+  <div class="section-header">
+    <div class="ico">❓</div>
+    <div class="info"><h2>Dúvidas frequentes</h2><p>Situações comuns e como resolver</p></div>
+  </div>
+
+  <h3>O aluno clicou e deu erro de acesso</h3>
+  <p>Verifique se o aluno está cadastrado no Canvas com <strong>e-mail completo e válido</strong> (ex.: <code>nome@instituicao.edu.br</code>) e com <strong>nome e sobrenome</strong> preenchidos. Dados incompletos no cadastro do LMS causam falha de autenticação na MB.</p>
+
+  <h3>A Minha Biblioteca não aparece nem no menu nem para adicionar nos módulos</h3>
+  <p>A ferramenta precisa ter sido instalada e habilitada pelo administrador do Canvas. Entre em contato com o setor de TI ou suporte da sua instituição.</p>
+
+  <h3>O aluno acessa a MB mas não tem acesso ao livro que indiquei</h3>
+  <p>O acesso ao conteúdo depende do contrato da instituição com a Minha Biblioteca. Se o aluno consegue abrir a MB mas não vê o livro, entre em contato com o suporte da MB para verificar o acervo contratado.</p>
+
+  <h3>Posso reutilizar os mesmos itens em semestres futuros?</h3>
+  <p>Sim. Os itens adicionados via Deep Linking ficam salvos nos módulos. Ao copiar ou replicar o curso no Canvas, esses links são mantidos e continuam funcionando normalmente.</p>
+
+  <h3>O item abre dentro do Canvas ou em nova aba?</h3>
+  <p>Depende de como a ferramenta foi configurada pelo administrador. O comportamento mais comum é abrir em uma <strong>nova aba</strong>. Caso prefira outro comportamento, o administrador pode ajustar as configurações da ferramenta.</p>
+</div>
+
+</div><!-- /sec-duvidas -->
+
+
+<!-- SUPORTE -->
+<div class="support-card">
+  <h2>Precisa de ajuda?</h2>
+  <p>Para dúvidas técnicas sobre a integração, entre em contato com o suporte da sua instituição ou da Minha Biblioteca.<br>Para dúvidas sobre o acervo ou acesso a livros, acesse o suporte em <strong>minhabiblioteca.com.br</strong>.</p>
+</div>
+
+</div><!-- /page -->
+
+<script>
+// Highlight active nav on scroll
+const sections = document.querySelectorAll('.section-anchor');
+const navBtns = document.querySelectorAll('.nav-btn');
+function updateNav(){
+  let current='';
+  sections.forEach(s=>{if(window.scrollY>=s.offsetTop-100)current=s.id});
+  navBtns.forEach(b=>{
+    const href=b.getAttribute('href').replace('#','');
+    b.classList.toggle('active',href===current);
+  });
+}
+window.addEventListener('scroll',updateNav,{passive:true});
+</script>
+</body>
+</html>

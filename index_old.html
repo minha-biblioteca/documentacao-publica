@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Documentação - Minha Biblioteca</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; display: flex; align-items: center; justify-content: center; }
+.card { background: white; border-radius: 24px; padding: 60px; max-width: 600px; width: 90%; box-shadow: 0 25px 50px rgba(0,0,0,0.15); text-align: center; }
+.logo { font-size: 48px; margin-bottom: 20px; }
+h1 { font-size: 28px; color: #1a1a2e; margin-bottom: 12px; font-weight: 700; }
+.subtitle { color: #667eea; font-size: 16px; font-weight: 500; margin-bottom: 30px; }
+p { color: #555; line-height: 1.8; font-size: 15px; margin-bottom: 20px; }
+.badge { display: inline-block; background: #f0f4ff; color: #667eea; padding: 8px 16px; border-radius: 20px; font-size: 13px; font-weight: 500; margin: 5px; }
+.status { margin-top: 30px; padding-top: 20px; border-top: 1px solid #eee; }
+.status-dot { display: inline-block; width: 10px; height: 10px; background: #10b981; border-radius: 50%; margin-right: 8px; animation: pulse 2s infinite; }
+@keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.5; } }
+.footer { margin-top: 30px; font-size: 12px; color: #999; }
+.deploy-info { margin-top: 20px; background: #f8f9ff; padding: 15px; border-radius: 12px; font-size: 13px; color: #667eea; }
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="logo">📚</div>
+  <h1>Documentação Minha Biblioteca</h1>
+  <p class="subtitle">Portal de Documentação Pública</p>
+  <p>Bem-vindo ao portal de documentação da Minha Biblioteca — a maior plataforma de biblioteca digital acadêmica do Brasil.</p>
+  <div>
+    <span class="badge">S3 + CloudFront</span>
+    <span class="badge">GitHub Actions CI/CD</span>
+    <span class="badge">Deploy em 30s</span>
+  </div>
+  <div class="deploy-info">
+    🚀 Deploy automático via GitHub Actions — qualquer push na main reflete aqui em segundos
+  </div>
+  <div class="status">
+    <span class="status-dot"></span>
+    <span style="color:#10b981;font-weight:500">Sistema operacional</span>
+  </div>
+  <div class="footer">
+    Infraestrutura &amp; SRE — Minha Biblioteca © 2026
+  </div>
+</div>
+</body>
+</html>
+<!-- deploy test 1786736922 -->
